@@ -1,11 +1,34 @@
-// Wait until the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  const startButton = document.getElementById('start');
-  const gameContainer = document.getElementById('game-container');
+const startBtn = document.getElementById("start-btn");
+const homeScreen = document.getElementById("home-screen");
+const gameScreen = document.getElementById("game-screen");
 
-  startButton.addEventListener('click', function() {
-    // Replace this with your real game logic later
-    gameContainer.innerHTML = "<p>Game started! Your word game goes here.</p>";
-    alert('Button works!');
-  });
+startBtn.addEventListener("click", () => {
+  homeScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
 });
+
+// Simple word game logic
+const letters = ["A", "P", "L", "E"];
+const input = document.getElementById("word-input");
+const submitBtn = document.getElementById("submit-word");
+const result = document.getElementById("result");
+
+submitBtn.addEventListener("click", () => {
+  const word = input.value.toUpperCase();
+  if (isValidWord(word)) {
+    result.textContent = "✅ Nice word!";
+  } else {
+    result.textContent = "❌ Invalid word";
+  }
+  input.value = "";
+});
+
+function isValidWord(word) {
+  const lettersCopy = [...letters];
+  for (let char of word) {
+    const index = lettersCopy.indexOf(char);
+    if (index === -1) return false;
+    lettersCopy.splice(index, 1);
+  }
+  return word.length >= 3;
+}

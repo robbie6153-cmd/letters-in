@@ -26,7 +26,42 @@
     }
   </style>
 </head>
+<style>
+#home-screen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #222;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+</style>
 <body>
+<div id="home-screen">
+  <h1>WORD GAME</h1>
+  <img src="images/home-screen.jpg" alt="Home Screen" style="max-width: 80%; height: auto;">
+  <button id="start-btn">Start Game</button>
+</div>
+
+<div id="game-screen" class="hidden">
+  <h2>Make a Word!</h2>
+  <p id="letters">A P L E</p>
+  <input type="text" id="word-input" placeholder="Type your word">
+  <button id="submit-word">Submit</button>
+  <p id="result"></p>
+</div>
   <h1 style="text-align:center;">Letters In</h1>
 
   <!-- Start Game button -->
