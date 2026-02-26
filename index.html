@@ -3,46 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Letters In</title>
-
-  <style>
-  <script src="game.js"></script>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #111;
-      color: #fff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .container {
-      text-align: center;
-      max-width: 360px;
-      width: 100%;
-      padding: 20px;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: none;
-      border-radius: 6px;
-      background: #4caf50;
-      font-weight: bold;
-    }
-  </style>
+  <title>Letters In - Word Game</title>
 </head>
 <body>
+  <h1>Letters In</h1>
 
-  <div class="container">
-    <h1>Letters In</h1>
-    <p>Make as many words as you can in 200 seconds.</p>
-    <button>Start Game</button>
-  </div>
+  <!-- Start Game button -->
+  <button id="start">Start Game</button>
 
+  <!-- Placeholder for game messages -->
+  <div id="game-container"></div>
+
+  <!-- Link to JS -->
+  <script src="game.js"></script>
 </body>
 </html>
