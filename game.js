@@ -1,21 +1,22 @@
 // ===== LETTERS IN DAILY GAME =====
 
-// Master word list (expand later or replace with 9-letter words you prefer)
+// Master 9-letter words list
 const masterWords = [
-  "EDUCATION",
-  "PAINTWORK",
-  "NOTEWORTH",
-  "UNDERMIND",
-  "TRAINABLE",
-  "RELATION",
-  "CREATION",
-  "REACTION",
-  "SEPARATED",
-  "GENERATED"
+  "EDUCATION","PAINTWORK","NOTEWORTH","UNDERMIND","TRAINABLE",
+  "RELATION","CREATION","REACTION","SEPARATED","GENERATED"
 ];
 
-// Large dictionary (example, replace with full list for real game)
-const dictionary = [/* paste all 100k words here */];
+// Dictionary will be loaded asynchronously from CDN
+let dictionary = [];
+
+// Load dictionary from CDN (an-array-of-english-words)
+fetch("https://cdn.jsdelivr.net/npm/an-array-of-english-words/index.json")
+  .then(res => res.json())
+  .then(words => {
+    dictionary = words.map(w => w.toLowerCase());
+    console.log("Dictionary loaded:", dictionary.length, "words");
+  })
+  .catch(err => console.error("Failed to load dictionary:", err));
 
 // ===== DAILY PUZZLE LOGIC =====
 function getDailyWord() {
@@ -67,6 +68,12 @@ const timer = setInterval(() => {
 
 // ===== SUBMIT WORD =====
 function submitWord(){
+  // Prevent submission before dictionary loaded
+  if(!dictionary || dictionary.length === 0){
+    message.innerText = "Loading dictionary… please wait";
+    return;
+  }
+
   const word = input.value.toLowerCase().trim();
   input.value = "";
 
@@ -90,7 +97,7 @@ function submitWord(){
     return;
   }
 
-  // Add points based on word length
+  // Add points based on length
   score += calculateScore(word);
   scoreDiv.innerText = "Score: " + score;
 
@@ -105,7 +112,7 @@ function calculateScore(word){
     case 7: return 3;
     case 8: return 4;
     case 9: return 5;
-    default: return 1; // all other words 1 point
+    default: return 1;
   }
 }
 
