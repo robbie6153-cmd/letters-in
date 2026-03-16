@@ -1,76 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Letters In - Word Game</title>
-  <style>
-    /* Style the game container to look like your original large box */
-    #game-container {
-      width: 600px;
-      height: 400px;
-      border: 2px solid black;
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      background-color: #f9f9f9;
-    }
-
-    #start {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      font-size: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Letters In</title>
+<link rel="stylesheet" href="styles.css">
 </head>
-<style>
-#home-screen {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background-color: #222;
-  color: white;
-}
 
-.hidden {
-  display: none;
-}
-
-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-}
-</style>
 <body>
-<div id="home-screen">
-  <h1>WORD GAME</h1>
-  <img src="images/home-screen.jpg" alt="Home Screen" style="max-width: 80%; height: auto;">
-  <button id="start-btn">Start Game</button>
+
+<h1>Letters In</h1>
+
+<div id="game">
+
+<div id="letters"></div>
+
+<div id="timer">Time: 200</div>
+<div id="score">Score: 0</div>
+
+<input id="wordInput" placeholder="Enter word">
+<button onclick="submitWord()">Submit</button>
+
+<div id="message"></div>
+
 </div>
 
-<div id="game-screen" class="hidden">
-  <h2>Make a Word!</h2>
-  <p id="letters">A P L E</p>
-  <input type="text" id="word-input" placeholder="Type your word">
-  <button id="submit-word">Submit</button>
-  <p id="result"></p>
+<div id="endScreen" style="display:none;">
+<h2 id="finalScore"></h2>
+<p>Come back for another game tomorrow.</p>
 </div>
-  <h1 style="text-align:center;">Letters In</h1>
 
-  <!-- Start Game button -->
-  <button id="start">Start Game</button>
-
-  <!-- Large game box -->
-  <div id="game-container">Your game will appear here!</div>
-
-  <!-- Link to JS -->
-  <script src="game.js"></script>
 </body>
 </html>
