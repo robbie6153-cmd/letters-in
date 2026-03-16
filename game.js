@@ -1,107 +1,165 @@
-// ---------------- Hidden 9-letter word ----------------
-const masterWord = "EDUCATION";
+// ===== LETTERS IN DAILY GAME =====
 
-// Shuffle letters for display
-function shuffle(word){
-    return word.split('').sort(()=>Math.random()-0.5).join('');
-}
-
-const letters = shuffle(masterWord);
-document.getElementById("letters").innerText = letters;
-
-// ---------------- Scoring & used words ----------------
-let score = 0;
-let usedWords = [];
-
-function scoreWord(word){
-    return word.length; // points = word length
-}
-
-// ---------------- Dictionary ----------------
-// Sample larger dictionary (replace with full one for production)
-const dictionary = [
-    "act","cat","dog","tone","note","done","dance","action","educate","education",
-    "cation","auction","coat","cone","date","coin","dice","once","icon","audit",
-    "audio","cationed","audition","auditioned","educations","aced","iced","dace"
+// 9-letter master word list (add more later)
+const masterWords = [
+"EDUCATION",
+"PAINTWORK",
+"NOTEWORTH",
+"UNDERMIND",
+"TRAINABLE",
+"RELATION",
+"CREATION",
+"REACTION",
+"SEPARATED",
+"GENERATED"
 ];
 
-// ---------------- Helper: can make word from letters ----------------
-function canMakeWord(word){
-    let temp = letters.split('');
-    for(let l of word){
-        let index = temp.indexOf(l.toUpperCase());
-        if(index === -1) return false;
-        temp.splice(index,1);
-    }
-    return true;
+// Simple dictionary sample (expand later)
+const dictionary = [
+"tone","note","eat","tea","ate","cat","act","toe","one","red","ran",
+"read","road","tone","rent","earn","near","stone","react","create",
+"trace","crate","cater","cart","care","race","tear","rate","tare",
+"earn","neat","ante","train","retain","retina","retained"
+];
+
+// DAILY WORD SELECTION
+function getDailyWord() {
+
+const today = new Date();
+const seed = today.getFullYear() + today.getMonth() + today.getDate();
+
+const index = seed % masterWords.length;
+
+return masterWords[index];
+
 }
 
-// ---------------- Submit word function ----------------
-function submitWord(){
-    let input = document.getElementById("wordInput").value.toLowerCase();
-    document.getElementById("wordInput").value="";
+const masterWord = getDailyWord().toUpperCase();
+let letters = masterWord.split("");
 
-    if(input.length < 3){
-        message("Word too short");
-        return;
-    }
+// shuffle letters
+letters.sort(() => Math.random() - 0.5);
 
-    if(usedWords.includes(input)){
-        message("Already used");
-        return;
-    }
+// game state
+let score = 0;
+let timeLeft = 200;
+let playedWords = [];
 
-    if(!dictionary.includes(input)){
-        message("Not in dictionary");
-        return;
-    }
+// DOM elements
+const lettersDiv = document.getElementById("letters");
+const timerDiv = document.getElementById("timer");
+const scoreDiv = document.getElementById("score");
+const input = document.getElementById("wordInput");
+const message = document.getElementById("message");
 
-    if(!canMakeWord(input)){
-        message("Cannot be made from letters");
-        return;
-    }
+// DAILY PLAY LOCK
+const todayKey = new Date().toDateString();
 
-    usedWords.push(input);
+if(localStorage.getItem("lettersinPlayed") === todayKey){
 
-    let points = scoreWord(input);
-    score += points;
+document.getElementById("game").style.display = "none";
+document.getElementById("endScreen").style.display = "block";
+document.getElementById("finalScore").innerText =
+"You've already played today. Come back tomorrow!";
 
-    document.getElementById("score").innerText="Score: "+score;
-    message("+"+points+" points!");
 }
 
-function message(text){
-    document.getElementById("message").innerText=text;
+// SHOW LETTERS
+lettersDiv.innerText = letters.join(" ");
+
+// TIMER
+const timer = setInterval(() => {
+
+timeLeft--;
+
+timerDiv.innerText = "Time: " + timeLeft;
+
+if(timeLeft <= 0){
+
+clearInterval(timer);
+endGame();
+
 }
 
-// ---------------- Timer ----------------
-let time = 200;
-let timer = setInterval(function(){
-    time--;
-    document.getElementById("timer").innerText="Time: "+time;
-    if(time <= 0){
-        clearInterval(timer);
-        endGame();
-    }
 },1000);
 
-// ---------------- End game ----------------
-function endGame(){
-    document.getElementById("game").style.display="none";
-    document.getElementById("endScreen").style.display="block";
-    document.getElementById("finalScore").innerText =
-        "Time’s Up! You scored "+score+" points.";
+// SUBMIT WORD
+function submitWord(){
+
+const word = input.value.toLowerCase().trim();
+input.value = "";
+
+if(word.length < 3){
+
+message.innerText = "Word too short";
+return;
+
 }
 
-// ---------------- Daily reset ----------------
-const today = new Date().toDateString();
-const lastPlayed = localStorage.getItem("lastPlayed");
+if(playedWords.includes(word)){
 
-if(lastPlayed === today){
-    document.getElementById("game").style.display="none";
-    document.getElementById("endScreen").style.display="block";
-    document.getElementById("finalScore").innerText =
-        "You've already played today.";
-} else {
-    localStorage.setItem("lastPlayed", today);
+message.innerText = "Already used";
+return;
+
+}
+
+if(!dictionary.includes(word)){
+
+message.innerText = "Not in dictionary";
+return;
+
+}
+
+if(!canMakeWord(word)){
+
+message.innerText = "Can't make from letters";
+return;
+
+}
+
+// score = word length
+score += word.length;
+
+scoreDiv.innerText = "Score: " + score;
+
+playedWords.push(word);
+
+message.innerText = "Accepted!";
+
+}
+
+// LETTER CHECK
+function canMakeWord(word){
+
+let tempLetters = masterWord.toLowerCase().split("");
+
+for(let char of word){
+
+let index = tempLetters.indexOf(char);
+
+if(index === -1){
+
+return false;
+
+}
+
+tempLetters.splice(index,1);
+
+}
+
+return true;
+
+}
+
+// END GAME
+function endGame(){
+
+localStorage.setItem("lettersinPlayed", todayKey);
+
+document.getElementById("game").style.display = "none";
+document.getElementById("endScreen").style.display = "block";
+
+document.getElementById("finalScore").innerText =
+"Time’s Up! You scored " + score + " points. Come back tomorrow for another game.";
+
 }
