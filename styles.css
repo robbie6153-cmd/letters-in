@@ -1,11 +1,17 @@
-/* General Game Styles */
+/* General */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: #2ecc71; /* green background */
   text-align: center;
   padding: 20px;
 }
 
+header h1 {
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Game Container */
 #game {
   display: inline-block;
 }
@@ -13,7 +19,7 @@ body {
 /* Letters as 3D Slate Tiles */
 #letters span {
   display: inline-block;
-  background: linear-gradient(to bottom, #778899, #556b75); /* slate gradient */
+  background: linear-gradient(to bottom, #778899, #556b75);
   color: white;
   padding: 15px 20px;
   margin: 5px;
@@ -55,13 +61,14 @@ button {
   margin-top: 15px;
   font-size: 1.2rem;
   font-weight: bold;
+  color: white;
 }
 
 /* Mobile Adjustments */
 @media (max-width: 600px) {
   #letters span {
-    font-size: 2rem;     /* smaller letters */
-    padding: 10px 15px;  /* smaller tiles */
-    margin-top: 50px;    /* lower letters on mobile */
+    font-size: 2rem;
+    padding: 10px 15px;
+    margin-top: 50px; /* slightly lowered */
   }
 }

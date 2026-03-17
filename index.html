@@ -2,20 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Letters In Game</title>
+  <title>Letters In</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>Letters In</h1>
+  </header>
   <div id="game">
     <div id="letters"></div>
-    <div id="timer">Time: <span id="time">60</span>s</div>
+    <div id="timer">Time: <span id="time">200</span>s</div>
     <div id="score">Score: <span id="points">0</span></div>
-    <input type="text" id="wordInput" placeholder="Type here...">
+    <input type="text" id="wordInput" placeholder="Type a word...">
     <button id="submitBtn">Submit</button>
     <div id="message"></div>
     <div id="finalScore"></div>
   </div>
-
+  <script src="dictionary.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
