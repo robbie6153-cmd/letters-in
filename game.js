@@ -150,6 +150,13 @@ inputEl.addEventListener("keydown", function (e) {
     submitWord();
   }
 });
+submitBtn.addEventListener("click", submitWord);
+
+inputEl.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    submitWord();
+  }
+});
 
 currentWord = pickDailyWord();
 shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
