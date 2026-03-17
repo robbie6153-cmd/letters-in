@@ -38,7 +38,11 @@ let timeLeft = 200;
 let playedWords = [];
 
 // ===== DOM ELEMENTS =====
-const lettersDiv = document.getElementById("letters");
+const lettersDiv = document.getElementById('letters');
+lettersDiv.innerHTML = currentLetters
+  .split('')                  // splits string into individual characters
+  .map(letter => `<span>${letter}</span>`)  // wraps each letter in a <span>
+  .join('');                  // joins them back into one string
 const timerDiv = document.getElementById("timer");
 const scoreDiv = document.getElementById("score");
 const input = document.getElementById("wordInput");
