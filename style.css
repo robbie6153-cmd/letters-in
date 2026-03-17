@@ -87,7 +87,7 @@ h1 {
   }
 
   #letters {
-    margin-top: 100px; /* lowers the main letters on mobile */
+    margin-top: 250px; /* lowers the main letters on mobile */
   }
 
   .tile {
