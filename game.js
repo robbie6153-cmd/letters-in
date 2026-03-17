@@ -1,143 +1,41 @@
-// ===== LETTERS IN DAILY GAME =====
-
-// Master 9-letter words list
-const masterWords = [
-  "EDUCATION","PAINTWORK","NOTEWORTH","UNDERMIND","TRAINABLE",
-  "RELATION","CREATION","REACTION","SEPARATED","GENERATED"
-];
-
-// Dictionary will be loaded asynchronously from CDN
-let dictionary = [];
-
-// Load dictionary from CDN (an-array-of-english-words)
-fetch("https://cdn.jsdelivr.net/npm/an-array-of-english-words/index.json")
-  .then(res => res.json())
-  .then(words => {
-    dictionary = words.map(w => w.toLowerCase());
-    console.log("Dictionary loaded:", dictionary.length, "words");
-  })
-  .catch(err => console.error("Failed to load dictionary:", err));
-
-// ===== DAILY PUZZLE LOGIC =====
-function getDailyWord() {
-  const today = new Date();
-  const seed = today.getFullYear() + today.getMonth() + today.getDate();
-  const index = seed % masterWords.length;
-  return masterWords[index];
-}
-
-const masterWord = getDailyWord().toUpperCase();
-let letters = masterWord.split("");
-
-// Shuffle letters
-letters.sort(() => Math.random() - 0.5);
-
-// ===== GAME STATE =====
+// Example game letters array (replace with your actual game logic)
+let currentLetters = "EXAMPLE"; // letters to display
 let score = 0;
-let timeLeft = 200;
-let playedWords = [];
 
-// ===== DOM ELEMENTS =====
-const lettersDiv = document.getElementById('letters');
-lettersDiv.innerHTML = currentLetters
-  .split('')                  // splits string into individual characters
-  .map(letter => `<span>${letter}</span>`)  // wraps each letter in a <span>
-  .join('');                  // joins them back into one string
-const timerDiv = document.getElementById("timer");
-const scoreDiv = document.getElementById("score");
-const input = document.getElementById("wordInput");
-const message = document.getElementById("message");
+// Function to render letters as tiles
+function renderLetters() {
+  const lettersDiv = document.getElementById('letters');
+  lettersDiv.innerHTML = ''; // clear previous letters
 
-// DAILY PLAY LOCK
-const todayKey = new Date().toDateString();
-if(localStorage.getItem("lettersinPlayed") === todayKey){
-  document.getElementById("game").style.display = "none";
-  document.getElementById("endScreen").style.display = "block";
-  document.getElementById("finalScore").innerText =
-    "You've already played today. Come back tomorrow!";
+  currentLetters.split('').forEach(letter => {
+    const span = document.createElement('span');
+    span.textContent = letter;
+    lettersDiv.appendChild(span);
+  });
 }
 
-// SHOW LETTERS
-lettersDiv.innerText = letters.join(" ");
+// Initial render
+renderLetters();
 
-// ===== TIMER =====
-const timer = setInterval(() => {
+// Timer example (60s countdown)
+let timeLeft = 60;
+const timerEl = document.getElementById('time');
+const timerInterval = setInterval(() => {
   timeLeft--;
-  timerDiv.innerText = "Time: " + timeLeft;
-  if(timeLeft <= 0){
-    clearInterval(timer);
-    endGame();
-  }
+  timerEl.textContent = timeLeft;
+  if (timeLeft <= 0) clearInterval(timerInterval);
 }, 1000);
 
-// ===== SUBMIT WORD =====
-function submitWord(){
-  // Prevent submission before dictionary loaded
-  if(!dictionary || dictionary.length === 0){
-    message.innerText = "Loading dictionary… please wait";
-    return;
+// Score example
+const scoreEl = document.getElementById('points');
+document.getElementById('submitBtn').addEventListener('click', () => {
+  const input = document.getElementById('wordInput');
+  if (input.value.toUpperCase() === currentLetters) {
+    score += 10;
+    document.getElementById('message').textContent = 'Correct!';
+  } else {
+    document.getElementById('message').textContent = 'Wrong!';
   }
-
-  const word = input.value.toLowerCase().trim();
-  input.value = "";
-
-  if(word.length < 3){
-    message.innerText = "Word too short";
-    return;
-  }
-
-  if(playedWords.includes(word)){
-    message.innerText = "Already used";
-    return;
-  }
-
-  if(!dictionary.includes(word)){
-    message.innerText = "Not in dictionary";
-    return;
-  }
-
-  if(!canMakeWord(word)){
-    message.innerText = "Can't make from letters";
-    return;
-  }
-
-  // Add points based on length
-  score += calculateScore(word);
-  scoreDiv.innerText = "Score: " + score;
-
-  playedWords.push(word);
-  message.innerText = "Accepted!";
-}
-
-// ===== SCORE CALCULATION =====
-function calculateScore(word){
-  switch(word.length){
-    case 6: return 2;
-    case 7: return 3;
-    case 8: return 4;
-    case 9: return 5;
-    default: return 1;
-  }
-}
-
-// ===== CHECK IF WORD CAN BE MADE FROM LETTERS =====
-function canMakeWord(word){
-  let tempLetters = masterWord.toLowerCase().split("");
-  for(let char of word){
-    let index = tempLetters.indexOf(char);
-    if(index === -1){
-      return false;
-    }
-    tempLetters.splice(index,1);
-  }
-  return true;
-}
-
-// ===== END GAME =====
-function endGame(){
-  localStorage.setItem("lettersinPlayed", todayKey);
-  document.getElementById("game").style.display = "none";
-  document.getElementById("endScreen").style.display = "block";
-  document.getElementById("finalScore").innerText =
-    "Time’s Up! You scored " + score + " points. Come back tomorrow for another game.";
-}
+  scoreEl.textContent = score;
+  input.value = '';
+});

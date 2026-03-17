@@ -1,110 +1,67 @@
+/* General Game Styles */
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    text-align: center;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    font-size: 48px;
-    margin-top: 30px;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 20px;
 }
 
 #game {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
+  display: inline-block;
 }
 
+/* Letters as 3D Slate Tiles */
 #letters span {
-  display: inline-block;        /* makes each letter a separate tile */
-  background: linear-gradient(to bottom, #778899, #556b75);
-  color: white;                 /* letter colour */
-  padding: 15px 20px;           /* size of the tile */
-  margin: 5px;                  /* space between letters */
-  border-radius: 5px;           /* rounded corners */
+  display: inline-block;
+  background: linear-gradient(to bottom, #778899, #556b75); /* slate gradient */
+  color: white;
+  padding: 15px 20px;
+  margin: 5px;
+  border-radius: 5px;
   font-weight: bold;
-  font-size: 2rem;              /* adjust as needed */
-}#letters span {
-  display: inline-block;        /* makes each letter a separate tile */
-  background: linear-gradient(to bottom, #778899, #556b75);
-  color: white;                 /* letter colour */
-  padding: 15px 20px;           /* size of the tile */
-  margin: 5px;                  /* space between letters */
-  border-radius: 5px;           /* rounded corners */
-  font-weight: bold;
-  font-size: 2rem;              /* adjust as needed */
-}
-#letters span {
-  box-shadow: 3px 3px 8px rgba(0,0,0,0.5); /* depth */
-  transition: transform 0.2s;             /* smooth hover effect */
+  font-size: 3rem;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
 }
 
 #letters span:hover {
-  transform: translateY(-3px);            /* subtle lift on hover */
+  transform: translateY(-3px);
   box-shadow: 5px 5px 12px rgba(0,0,0,0.6);
 }
-{
-    font-size: 48px;
-    font-weight: bold;
-    letter-spacing: 10px;
-    margin-bottom: 30px;
-}
 
+/* Timer and Score */
 #timer, #score {
-    font-size: 28px;
-    margin: 10px 0;
+  margin-top: 15px;
+  font-size: 1.2rem;
 }
 
+/* Input and Button */
 #wordInput {
-    font-size: 22px;
-    padding: 10px;
-    width: 70%;
-    max-width: 300px;
-    margin-top: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  margin-top: 10px;
 }
-
 button {
-    font-size: 22px;
-    padding: 10px 20px;
-    margin-left: 10px;
-    cursor: pointer;
+  padding: 10px 15px;
+  font-size: 1rem;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
-#message {
-    margin-top: 20px;
-    font-size: 20px;
+/* Message and Final Score */
+#message, #finalScore {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
-#endScreen {
-    text-align: center;
-    margin-top: 80px;
-}
-
-#finalScore {
-    font-size: 36px;
-}
-
-/* Mobile adjustments */
-
+/* Mobile Adjustments */
 @media (max-width: 600px) {
-
-    h1 {
-        font-size: 36px;
-    }
-
-    #letters {
-        font-size: 2rem /* adjust as needed */;
-        letter-spacing: 6px;
-    }
-
-    #timer, #score {
-        font-size: 22px;
-    }
-
-    #wordInput {
-        width: 80%;
-    }
-
+  #letters span {
+    font-size: 2rem;     /* smaller letters */
+    padding: 10px 15px;  /* smaller tiles */
+    margin-top: 50px;    /* lower letters on mobile */
+  }
 }

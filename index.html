@@ -1,37 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Letters In</title>
-
-    <!-- Mobile scaling -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Letters In Game</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>LETTERS IN</h1>
+  <div id="game">
+    <div id="letters"></div>
+    <div id="timer">Time: <span id="time">60</span>s</div>
+    <div id="score">Score: <span id="points">0</span></div>
+    <input type="text" id="wordInput" placeholder="Type here...">
+    <button id="submitBtn">Submit</button>
+    <div id="message"></div>
+    <div id="finalScore"></div>
+  </div>
 
-    <!-- Game container -->
-    <div id="game">
-        <div id="letters"></div>
-
-        <div id="timer">Time: 200</div>
-        <div id="score">Score: 0</div>
-
-        <input type="text" id="wordInput" placeholder="Enter word">
-        <button onclick="submitWord()">Submit</button>
-
-        <div id="message"></div>
-    </div>
-
-    <!-- End screen -->
-    <div id="endScreen" style="display:none;">
-        <div id="finalScore"></div>
-    </div>
-
-    <!-- Dictionary loader and game JS -->
-    <script src="game.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>
