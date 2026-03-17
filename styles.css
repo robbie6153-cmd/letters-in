@@ -17,7 +17,35 @@ h1 {
     padding: 20px;
 }
 
-#letters {
+#letters span {
+  display: inline-block;        /* makes each letter a separate tile */
+  background: linear-gradient(to bottom, #778899, #556b75);
+  color: white;                 /* letter colour */
+  padding: 15px 20px;           /* size of the tile */
+  margin: 5px;                  /* space between letters */
+  border-radius: 5px;           /* rounded corners */
+  font-weight: bold;
+  font-size: 2rem;              /* adjust as needed */
+}#letters span {
+  display: inline-block;        /* makes each letter a separate tile */
+  background: linear-gradient(to bottom, #778899, #556b75);
+  color: white;                 /* letter colour */
+  padding: 15px 20px;           /* size of the tile */
+  margin: 5px;                  /* space between letters */
+  border-radius: 5px;           /* rounded corners */
+  font-weight: bold;
+  font-size: 2rem;              /* adjust as needed */
+}
+#letters span {
+  box-shadow: 3px 3px 8px rgba(0,0,0,0.5); /* depth */
+  transition: transform 0.2s;             /* smooth hover effect */
+}
+
+#letters span:hover {
+  transform: translateY(-3px);            /* subtle lift on hover */
+  box-shadow: 5px 5px 12px rgba(0,0,0,0.6);
+}
+{
     font-size: 48px;
     font-weight: bold;
     letter-spacing: 10px;
