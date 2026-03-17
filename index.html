@@ -2,22 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Letters In</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Letters In</h1>
-  </header>
   <div id="game">
+    <h1>Letters In</h1>
+
     <div id="letters"></div>
-    <div id="timer">Time: <span id="time">200</span>s</div>
-    <div id="score">Score: <span id="points">0</span></div>
-    <input type="text" id="wordInput" placeholder="Type a word...">
+
+    <div id="infoBar">
+      <div id="timer">Time: <span id="time">200</span></div>
+      <div id="score">Score: <span id="points">0</span></div>
+    </div>
+
+    <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
     <button id="submitBtn">Submit</button>
+
     <div id="message"></div>
     <div id="finalScore"></div>
   </div>
+
   <script src="dictionary.js"></script>
   <script src="game.js"></script>
 </body>

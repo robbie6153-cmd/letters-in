@@ -1,79 +1,165 @@
-// Example dictionary.js assumed to define an array "dictionary" of words
-// const dictionary = ["EXAMPLES", "ANOTHERWORD", ...];
+let score = 0;
+let timeLeft = 200;
+let usedWords = new Set();
+let currentWord = "";
+let shuffledLetters = [];
 
-// Helper: select a random 9-letter word daily
-function getDailyWord() {
-  const today = new Date();
-  const daySeed = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
-  const nineLetterWords = dictionary.filter(word => word.length === 9);
-  if(nineLetterWords.length === 0) return "EXAMPLE"; // fallback
-  const index = daySeed % nineLetterWords.length;
-  return nineLetterWords[index].toUpperCase();
+const lettersEl = document.getElementById("letters");
+const timeEl = document.getElementById("time");
+const scoreEl = document.getElementById("points");
+const inputEl = document.getElementById("wordInput");
+const submitBtn = document.getElementById("submitBtn");
+const messageEl = document.getElementById("message");
+const finalScoreEl = document.getElementById("finalScore");
+
+function getDictionaryArray() {
+  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) {
+    return dictionary;
+  }
+  if (typeof words !== "undefined" && Array.isArray(words)) {
+    return words;
+  }
+  return null;
 }
 
-let currentWord = getDailyWord();
-let score = 0;
-let usedWords = new Set();
+function getDailySeed() {
+  const today = new Date();
+  return Number(
+    `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`
+  );
+}
 
-// Render letters as tiles
+function shuffleArray(arr, seed) {
+  const result = [...arr];
+  let randomSeed = seed;
+
+  function seededRandom() {
+    randomSeed = (randomSeed * 9301 + 49297) % 233280;
+    return randomSeed / 233280;
+  }
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+
+  return result;
+}
+
+function pickDailyWord() {
+  const dict = getDictionaryArray();
+
+  if (!dict) {
+    return "NOTEBOOKS";
+  }
+
+  const nineLetterWords = dict
+    .filter(word => typeof word === "string")
+    .map(word => word.trim().toUpperCase())
+    .filter(word => /^[A-Z]{9}$/.test(word));
+
+  if (nineLetterWords.length === 0) {
+    return "NOTEBOOKS";
+  }
+
+  const seed = getDailySeed();
+  return nineLetterWords[seed % nineLetterWords.length];
+}
+
 function renderLetters() {
-  const lettersDiv = document.getElementById('letters');
-  lettersDiv.innerHTML = '';
-  currentWord.split('').forEach(letter => {
-    const span = document.createElement('span');
-    span.textContent = letter;
-    lettersDiv.appendChild(span);
+  lettersEl.innerHTML = "";
+  shuffledLetters.forEach(letter => {
+    const tile = document.createElement("div");
+    tile.className = "tile";
+    tile.textContent = letter;
+    lettersEl.appendChild(tile);
   });
 }
 
-renderLetters();
-
-// Timer
-let timeLeft = 200;
-const timerEl = document.getElementById('time');
-const interval = setInterval(() => {
-  timeLeft--;
-  timerEl.textContent = timeLeft;
-  if (timeLeft <= 0) {
-    clearInterval(interval);
-    endGame();
+function canMakeWordFromLetters(word, letters) {
+  const available = [...letters];
+  for (const char of word) {
+    const index = available.indexOf(char);
+    if (index === -1) return false;
+    available.splice(index, 1);
   }
-}, 1000);
+  return true;
+}
 
-// Scoring rules
 function calculatePoints(word) {
   const len = word.length;
-  if(len < 3) return 0;
-  if(len === 3 || len === 4 || len === 5) return 1;
-  if(len === 6) return 2;
-  if(len === 7) return 3;
-  if(len === 8) return 4;
-  if(len === 9) return 5;
+  if (len < 3) return 0;
+  if (len >= 3 && len <= 5) return 1;
+  if (len === 6) return 2;
+  if (len === 7) return 3;
+  if (len === 8) return 4;
+  if (len === 9) return 5;
   return 0;
 }
 
-// Submit word
-document.getElementById('submitBtn').addEventListener('click', () => {
-  const input = document.getElementById('wordInput');
-  const word = input.value.toUpperCase();
-  if(!word || usedWords.has(word)) {
-    document.getElementById('message').textContent = "Already used or empty!";
-    input.value = '';
+function submitWord() {
+  const dict = getDictionaryArray();
+  const word = inputEl.value.trim().toUpperCase();
+
+  if (timeLeft <= 0) return;
+
+  if (word.length < 3) {
+    messageEl.textContent = "Word must be at least 3 letters.";
+    inputEl.value = "";
     return;
   }
 
-  usedWords.add(word);
+  if (usedWords.has(word)) {
+    messageEl.textContent = "You already used that word.";
+    inputEl.value = "";
+    return;
+  }
+
+  if (!canMakeWordFromLetters(word, shuffledLetters)) {
+    messageEl.textContent = "That word can't be made from these letters.";
+    inputEl.value = "";
+    return;
+  }
+
+  if (dict && !getDictionaryArray().map(w => String(w).trim().toUpperCase()).includes(word)) {
+    messageEl.textContent = "That word is not in the dictionary.";
+    inputEl.value = "";
+    return;
+  }
+
   const points = calculatePoints(word);
+  usedWords.add(word);
   score += points;
-  document.getElementById('points').textContent = score;
-  document.getElementById('message').textContent = `+${points} point(s) for "${word}"`;
-  input.value = '';
+  scoreEl.textContent = score;
+  messageEl.textContent = `Accepted: ${word} (+${points})`;
+  inputEl.value = "";
+}
+
+function endGame() {
+  clearInterval(timerInterval);
+  inputEl.disabled = true;
+  submitBtn.disabled = true;
+  messageEl.textContent = "";
+  finalScoreEl.textContent = `Game's up. Your score was ${score}. Come back tomorrow for a new game.`;
+}
+
+submitBtn.addEventListener("click", submitWord);
+
+inputEl.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    submitWord();
+  }
 });
 
-// End game
-function endGame() {
-  document.getElementById('message').textContent = '';
-  document.getElementById('finalScore').textContent = `Game over! Your score: ${score}. Come back tomorrow for a new game.`;
-  document.getElementById('submitBtn').disabled = true;
-  document.getElementById('wordInput').disabled = true;
-}
+currentWord = pickDailyWord();
+shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
+renderLetters();
+
+const timerInterval = setInterval(() => {
+  timeLeft--;
+  timeEl.textContent = timeLeft;
+  if (timeLeft <= 0) {
+    timeEl.textContent = 0;
+    endGame();
+  }
+}, 1000);
