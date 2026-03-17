@@ -112,3 +112,9 @@ margin-top: 30px;
     width: 120px;
   }
 }
+@media (max-width: 768px) {
+  #letters {
+    margin-top: 80px !important;
+    background: red !important;
+  }
+}
