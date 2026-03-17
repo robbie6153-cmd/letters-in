@@ -82,7 +82,7 @@ margin-top: 30px;
   font-weight: bold;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   h1 {
     font-size: 2rem;
   }
