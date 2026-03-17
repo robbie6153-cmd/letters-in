@@ -67,7 +67,7 @@ button {
     }
 
     #letters {
-        font-size: 36px;
+        font-size: 2rem /* adjust as needed */;
         letter-spacing: 6px;
     }
 
