@@ -145,7 +145,6 @@ function endGame() {
   clearInterval(timerInterval);
   inputEl.disabled = true;
   submitBtn.disabled = true;
-  messageEl.textContent = "";
   finalScoreEl.textContent = `Game's up. Your score was ${score}. Come back tomorrow for a new game.`;
 }
 
