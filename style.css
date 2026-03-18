@@ -112,12 +112,11 @@ margin-top: 30px;
   #submitBtn {
     width: 120px;
   }
-}
-.home-container {
-  position: relative;
+.home-container img {
   width: 100%;
-  max-width: 600px; /* optional */
-  margin: 0 auto;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
 }
 
 .home-container img {
