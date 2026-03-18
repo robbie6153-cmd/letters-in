@@ -158,15 +158,17 @@ inputEl.addEventListener("keydown", function (e) {
   }
 });
 
-currentWord = pickDailyWord();
-shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
-renderLetters();
+setTimeout(() => {
+  currentWord = pickDailyWord();
+  shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
+  renderLetters();
 
-const timerInterval = setInterval(() => {
-  timeLeft--;
-  timeEl.textContent = timeLeft;
-  if (timeLeft <= 0) {
-    timeEl.textContent = 0;
-    endGame();
-  }
-}, 1000);
+  const timerInterval = setInterval(() => {
+    timeLeft--;
+    timeEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      timeEl.textContent = 0;
+      endGame();
+    }
+  }, 1000);
+}, 2000);
