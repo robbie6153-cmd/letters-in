@@ -3,6 +3,7 @@ let timeLeft = 200;
 let usedWords = new Set();
 let currentWord = "";
 let shuffledLetters = [];
+let timerInterval;
 
 const lettersEl = document.getElementById("letters");
 const timeEl = document.getElementById("time");
@@ -168,7 +169,7 @@ setTimeout(() => {
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
 
-  const timerInterval = setInterval(() => {
+ timerInterval = setInterval(() => {
     timeLeft--;
     timeEl.textContent = timeLeft;
     if (timeLeft <= 0) {
