@@ -113,3 +113,28 @@ margin-top: 30px;
     width: 120px;
   }
 }
+.home-container {
+  position: relative;
+  width: 100%;
+  max-width: 600px; /* optional */
+  margin: 0 auto;
+}
+
+.home-container img {
+  width: 100%;
+  display: block;
+}
+
+.play-button {
+  position: absolute;
+
+  /* adjust these numbers to match your button position */
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 200px;
+  height: 60px;
+
+  cursor: pointer;
+}
