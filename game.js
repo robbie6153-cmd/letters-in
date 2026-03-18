@@ -177,3 +177,7 @@ setTimeout(() => {
     }
   }, 1000);
 }, 2000);
+function startGame() {
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("game").style.display = "block";
+}
