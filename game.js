@@ -49,9 +49,9 @@ function shuffleArray(arr, seed) {
 function pickDailyWord() {
   const dict = getDictionaryArray();
 
-  if (!dict) {
-    return "NOTEBOOKS";
-  }
+  if (!dict || dict.length === 0) {
+  return "NOTEBOOKS";
+}
 
   const nineLetterWords = dict
     .filter(word => typeof word === "string")
