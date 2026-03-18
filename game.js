@@ -121,7 +121,12 @@ function submitWord() {
     return;
   }
 
-  if (dict && !getDictionaryArray().map(w => String(w).trim().toUpperCase()).includes(word)) {
+  if (!dict || dict.length === 0) {
+  messageEl.textContent = "Dictionary still loading. Try again in a moment.";
+  return;
+}
+
+if (!dict.map(w => String(w).trim().toUpperCase()).includes(word)) {
     messageEl.textContent = "That word is not in the dictionary.";
     inputEl.value = "";
     return;
