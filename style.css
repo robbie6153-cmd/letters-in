@@ -7,6 +7,16 @@ body {
   align-items: flex-start;
   padding: 0;
   box-sizing: border-box;
+  background: url("./background.jpg") center center / cover no-repeat;
+}
+
+#game {
+  padding-bottom: 120px;
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  color: white;
+  background: transparent;
 }
 
 #game {
