@@ -8,7 +8,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   background: url("./background.jpg") center center / contain no-repeat;
-  background-color: black;
 }
 
 #game {
