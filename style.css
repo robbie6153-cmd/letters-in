@@ -24,6 +24,51 @@ body {
   display: block;
 }
 
+.top-nav {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 10;
+}
+
+.nav-item {
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  font-size: 0.85rem;
+  line-height: 1.1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  padding: 4px 3px;
+}
+
+.home-btn,
+.leaderboard-btn,
+.privacy-btn,
+.terms-btn,
+.about-btn,
+.settings-btn,
+.profile-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.privacy-btn {
+  max-width: 95px;
+}
+
+.terms-btn {
+  max-width: 110px;
+}
+
 .play-button {
   position: absolute;
   top: 70%;
@@ -32,6 +77,49 @@ body {
   width: 250px;
   height: 60px;
   cursor: pointer;
+  z-index: 10;
+}
+
+.contact-btn {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+  background: rgba(40, 40, 40, 0.55);
+  padding: 8px 14px;
+  border-radius: 18px;
+  z-index: 10;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+  .top-nav {
+    top: 6px;
+    padding: 0 4px;
+  }
+
+  .nav-item {
+    font-size: 0.62rem;
+    padding: 2px 2px;
+  }
+
+  .privacy-btn {
+    max-width: 70px;
+  }
+
+  .terms-btn {
+    max-width: 82px;
+  }
+
+  .contact-btn {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
 }
 
 /* GAME AREA */
