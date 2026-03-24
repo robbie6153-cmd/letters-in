@@ -15,6 +15,19 @@
   <title>Letters In</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<script>
+  function showRules() {
+    alert("clicked");
+    document.getElementById("home-screen").style.display = "none";
+    document.getElementById("rules-screen").style.display = "block";
+  }
+
+  function startGame() {
+    document.getElementById("home-screen").style.display = "none";
+    document.getElementById("rules-screen").style.display = "none";
+    document.getElementById("game").style.display = "block";
+  }
+</script>
 <body>
 
   <div id="home-screen">
@@ -29,7 +42,7 @@
       <a href="settings.html" class="hotspot settings-link" aria-label="Settings"></a>
       <a href="profile.html" class="hotspot profile-link" aria-label="Profile"></a>
 
-      <button onclick="showRules()">Play Now</button>
+      <button class="play-button-test" onclick="showRules()">Play Now</button>
       <a href="contact.html" class="hotspot contact-link" aria-label="Contact Us"></a>
     </div>
   </div>
