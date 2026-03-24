@@ -51,8 +51,8 @@ function pickDailyWord() {
   const dict = getDictionaryArray();
 
   if (!dict || dict.length === 0) {
-  return "NOTEBOOKS";
-}
+    return "NOTEBOOKS";
+  }
 
   const nineLetterWords = dict
     .filter(word => typeof word === "string")
@@ -123,11 +123,11 @@ function submitWord() {
   }
 
   if (!dict || dict.length === 0) {
-  messageEl.textContent = "Dictionary still loading. Try again in a moment.";
-  return;
-}
+    messageEl.textContent = "Dictionary still loading. Try again in a moment.";
+    return;
+  }
 
-if (!dict.map(w => String(w).trim().toUpperCase()).includes(word)) {
+  if (!dict.map(w => String(w).trim().toUpperCase()).includes(word)) {
     messageEl.textContent = "That word is not in the dictionary.";
     inputEl.value = "";
     return;
@@ -148,13 +148,18 @@ function endGame() {
   finalScoreEl.textContent = `Game's up. Your score was ${score}. Come back tomorrow for a new game.`;
 }
 
-submitBtn.addEventListener("click", submitWord);
+function showRules() {
+  alert("clicked");
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("rules-screen").style.display = "block";
+}
 
-inputEl.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    submitWord();
-  }
-});
+function startGame() {
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("rules-screen").style.display = "none";
+  document.getElementById("game").style.display = "block";
+}
+
 submitBtn.addEventListener("click", submitWord);
 
 inputEl.addEventListener("keydown", function (e) {
@@ -168,21 +173,13 @@ setTimeout(() => {
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
 
- timerInterval = setInterval(() => {
+  timerInterval = setInterval(() => {
     timeLeft--;
     timeEl.textContent = timeLeft;
+
     if (timeLeft <= 0) {
       timeEl.textContent = 0;
       endGame();
     }
   }, 1000);
 }, 2000);
-function showRules() {
-  document.getElementById("home-screen").style.display = "none";
-  document.getElementById("rules-screen").style.display = "block";
-}
-function startGame() {
-  document.getElementById("home-screen").style.display = "none";
-  document.getElementById("rules-screen").style.display = "none";
-  document.getElementById("game").style.display = "block";
-}
