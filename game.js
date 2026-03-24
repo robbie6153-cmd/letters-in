@@ -149,7 +149,6 @@ function endGame() {
 }
 
 function showRules() {
-  alert("clicked");
   document.getElementById("home-screen").style.display = "none";
   document.getElementById("rules-screen").style.display = "block";
 }
