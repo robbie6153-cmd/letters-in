@@ -177,7 +177,12 @@ setTimeout(() => {
     }
   }, 1000);
 }, 2000);
+function showRules() {
+  document.getElementById("home-screen").style.display = "none";
+  document.getElementById("rules-screen").style.display = "block";
+}
 function startGame() {
   document.getElementById("home-screen").style.display = "none";
+  document.getElementById("rules-screen").style.display = "none";
   document.getElementById("game").style.display = "block";
 }
