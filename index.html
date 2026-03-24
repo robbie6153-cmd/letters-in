@@ -17,7 +17,6 @@
 </head>
 <script>
   function showRules() {
-    alert("clicked");
     document.getElementById("home-screen").style.display = "none";
     document.getElementById("rules-screen").style.display = "block";
   }
@@ -42,7 +41,9 @@
       <a href="settings.html" class="hotspot settings-link" aria-label="Settings"></a>
       <a href="profile.html" class="hotspot profile-link" aria-label="Profile"></a>
 
-      <div class="play-button" onclick="showRules()" aria-label="Play Now"></div>
+      <button onclick="showRules()" style="position:absolute; left:50%; top:78%; transform:translate(-50%,-50%); z-index:9999; padding:18px 40px; font-size:28px; font-weight:bold; background:#2ecc40; color:white; border:3px solid black; border-radius:12px; cursor:pointer;">
+  Play Now
+</button>
       <a href="contact.html" class="hotspot contact-link" aria-label="Contact Us"></a>
     </div>
   </div>
