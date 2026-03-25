@@ -29,72 +29,62 @@
 </script>
 <body>
 
-  <body>
+  <div class="home-page">
 
-  <div class="home-page">   <!-- ✅ START WRAP -->
+    <div id="home-screen">
+      <div class="home-container">
+        <img src="homepage.jpg" alt="Letters In Home">
 
-  <div id="home-screen">
-    <div class="home-container">
-      <img src="homepage.jpg" alt="Letters In Home">
+        <a href="index.html" class="hotspot home-link" aria-label="Home"></a>
+        <a href="leaderboard.html" class="hotspot leaderboard-link" aria-label="Leaderboard"></a>
+        <a href="privacy.html" class="hotspot privacy-link" aria-label="Privacy Policy"></a>
+        <a href="terms.html" class="hotspot terms-link" aria-label="Terms and Conditions"></a>
+        <a href="about.html" class="hotspot about-link" aria-label="About"></a>
+        <a href="settings.html" class="hotspot settings-link" aria-label="Settings"></a>
+        <a href="profile.html" class="hotspot profile-link" aria-label="Profile"></a>
 
-      <a href="index.html" class="hotspot home-link" aria-label="Home"></a>
-      <a href="leaderboard.html" class="hotspot leaderboard-link" aria-label="Leaderboard"></a>
-      <a href="privacy.html" class="hotspot privacy-link" aria-label="Privacy Policy"></a>
-      <a href="terms.html" class="hotspot terms-link" aria-label="Terms and Conditions"></a>
-      <a href="about.html" class="hotspot about-link" aria-label="About"></a>
-      <a href="settings.html" class="hotspot settings-link" aria-label="Settings"></a>
-      <a href="profile.html" class="hotspot profile-link" aria-label="Profile"></a>
+        <div class="play-button" onclick="showRules()" aria-label="Play Now"></div>
 
-<div class="play-button" onclick="showRules()" aria-label="Play Now"></div>
-
-<a href="contact.html" class="hotspot contact-link" aria-label="Contact Us"></a>
-    </div>
-  </div>
-
-  <div id="rules-screen" style="display:none;">
-    <div class="rules-container">
-      <h1>How To Play</h1>
-
-      <p>1. Make as many words as you can from the 9 letters in 200 seconds.</p>
-      <p>2. Words must be in the English dictionary and three letters or more.</p>
-      <p>3. You score one point per word, two points for a 6 letter word, three points for a 7 letter word, four points for an 8 letter word and five points for a 9 letter word.</p>
-      <p>4. There will always be a 9 letter word.</p>
-      <p>5. No words such as names and places.</p>
-      <p>6. A new game begins at midnight GMT.</p>
-
-      <button onclick="startGame()">Start Game</button>
-    </div>
-  </div>
-
-  <div id="game" style="display:none;">
-    <h1>Letters In</h1>
-
-    <div id="letters"></div>
-
-    <div id="infoBar">
-      <div id="timer">Time: <span id="time">200</span></div>
-      <div id="score">Score: <span id="points">0</span></div>
+        <a href="contact.html" class="hotspot contact-link" aria-label="Contact Us"></a>
+      </div>
     </div>
 
-    <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
-    <button id="submitBtn">Submit</button>
+    <div id="rules-screen" style="display:none;">
+      <div class="rules-container">
+        <h1>How To Play</h1>
 
-    <div id="message"></div>
-    <div id="finalScore"></div>
+        <p>1. Make as many words as you can from the 9 letters in 200 seconds.</p>
+        <p>2. Words must be in the English dictionary and three letters or more.</p>
+        <p>3. You score one point per word, two points for a 6 letter word, three points for a 7 letter word, four points for an 8 letter word and five points for a 9 letter word.</p>
+        <p>4. There will always be a 9 letter word.</p>
+        <p>5. No words such as names and places.</p>
+        <p>6. A new game begins at midnight GMT.</p>
+
+        <button onclick="startGame()">Start Game</button>
+      </div>
+    </div>
+
+    <div id="game" style="display:none;">
+      <h1>Letters In</h1>
+
+      <div id="letters"></div>
+
+      <div id="infoBar">
+        <div id="timer">Time: <span id="time">200</span></div>
+        <div id="score">Score: <span id="points">0</span></div>
+      </div>
+
+      <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
+      <button id="submitBtn">Submit</button>
+
+      <div id="message"></div>
+      <div id="finalScore"></div>
+    </div>
+
   </div>
 
   <script src="dictionary.js"></script>
   <script src="game.js"></script>
-  <p>
-  <a href="index.html" class="back-btn">← Back to Home</a>
-</p>
 
-<footer>
-  <a href="privacy.html">Privacy Policy</a> |
-  <a href="terms.html">Terms</a>
-</footer>
-  </div>  <!-- ✅ END WRAP -->
-
-</body>
 </body>
 </html>
