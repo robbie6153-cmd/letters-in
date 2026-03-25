@@ -4,10 +4,13 @@ body {
   box-sizing: border-box;
   min-height: 100vh;
   font-family: Arial, sans-serif;
+  background: url("./background.jpg") center center / cover no-repeat;
+}
+
+.home-page {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: url("./background.jpg") center center / cover no-repeat;
 }
 
 *,
