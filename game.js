@@ -64,7 +64,8 @@ function pickDailyWord() {
   }
 
   const seed = getDailySeed();
-  return nineLetterWords[seed % nineLetterWords.length];
+  const randomIndex = Math.floor(Math.abs(Math.sin(seed)) * nineLetterWords.length);
+return nineLetterWords[randomIndex];
 }
 
 function renderLetters() {
