@@ -296,4 +296,24 @@ h1 {
   .rules-container p {
     font-size: 0.95rem;
   }
+  .end-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.end-buttons button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #2ecc71; /* nice green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.end-buttons button:hover {
+  opacity: 0.9;
+}
 }

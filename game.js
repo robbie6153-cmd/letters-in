@@ -11,8 +11,22 @@ const scoreEl = document.getElementById("points");
 const inputEl = document.getElementById("wordInput");
 const submitBtn = document.getElementById("submitBtn");
 const messageEl = document.getElementById("message");
-const finalScoreEl = document.getElementById("finalScore");
+document.getElementById("finalScore").innerHTML = `
+  <p>Time's up! You scored ${score} points. Come back tomorrow for a new game.</p>
+  <div class="end-buttons">
+    <button onclick="submitScore()">Submit Score</button>
+    <button onclick="goHome()">Home</button>
+  </div>
+`;
+function goHome() {
+  document.getElementById("game").style.display = "none";
+  document.getElementById("rules-screen").style.display = "none";
+  document.getElementById("home-screen").style.display = "block";
+}
 
+function submitScore() {
+  alert("Score submission coming soon!");
+}
 function getDictionaryArray() {
   if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) {
     return dictionary;
@@ -64,8 +78,7 @@ function pickDailyWord() {
   }
 
   const seed = getDailySeed();
-  const randomIndex = Math.floor(Math.abs(Math.sin(seed)) * nineLetterWords.length);
-return nineLetterWords[randomIndex];
+  return nineLetterWords[seed % nineLetterWords.length];
 }
 
 function renderLetters() {
