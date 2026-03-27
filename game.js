@@ -11,14 +11,10 @@ const scoreEl = document.getElementById("points");
 const inputEl = document.getElementById("wordInput");
 const submitBtn = document.getElementById("submitBtn");
 const messageEl = document.getElementById("message");
-document.getElementById("finalScore").innerHTML = `
-  <p>Time's up! You scored ${score} points. Come back tomorrow for a new game.</p>
-  <div class="end-buttons">
-    <button onclick="submitScore()">Submit Score</button>
-    <button onclick="goHome()">Home</button>
-  </div>
-`;
+const finalScoreEl = document.getElementById("finalScore");
+
 function goHome() {
+  clearInterval(timerInterval);
   document.getElementById("game").style.display = "none";
   document.getElementById("rules-screen").style.display = "none";
   document.getElementById("home-screen").style.display = "block";
@@ -27,6 +23,7 @@ function goHome() {
 function submitScore() {
   alert("Score submission coming soon!");
 }
+
 function getDictionaryArray() {
   if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) {
     return dictionary;
@@ -159,7 +156,14 @@ function endGame() {
   clearInterval(timerInterval);
   inputEl.disabled = true;
   submitBtn.disabled = true;
-  finalScoreEl.textContent = `Game's up. Your score was ${score}. Come back tomorrow for a new game.`;
+
+  finalScoreEl.innerHTML = `
+    <p>Time's up! You scored ${score} points. Come back tomorrow for a new game.</p>
+    <div class="end-buttons">
+      <button onclick="submitScore()">Submit Score</button>
+      <button onclick="goHome()">Home</button>
+    </div>
+  `;
 }
 
 function showRules() {
@@ -171,6 +175,11 @@ function startGame() {
   document.getElementById("home-screen").style.display = "none";
   document.getElementById("rules-screen").style.display = "none";
   document.getElementById("game").style.display = "block";
+
+  finalScoreEl.innerHTML = "";
+  messageEl.textContent = "";
+  inputEl.disabled = false;
+  submitBtn.disabled = false;
 }
 
 submitBtn.addEventListener("click", submitWord);
