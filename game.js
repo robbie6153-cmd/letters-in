@@ -61,6 +61,20 @@ function seededRandom(seed) {
   let x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 }
+
+function shuffleArray(arr, seed) {
+  const result = [...arr];
+  let currentSeed = seed;
+
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(seededRandom(currentSeed) * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+    currentSeed++;
+  }
+
+  return result;
+}
+
 function pickDailyWord() {
   const dict = getDictionaryArray();
 
@@ -76,9 +90,12 @@ function pickDailyWord() {
   if (nineLetterWords.length === 0) {
     return "NOTEBOOKS";
   }
-const seed = getDailySeed();
+
+  const seed = getDailySeed();
   const index = Math.floor(seededRandom(seed) * nineLetterWords.length);
-return nineLetterWords[index];
+
+  return nineLetterWords[index];
+}
 
 function renderLetters() {
   lettersEl.innerHTML = "";
