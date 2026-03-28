@@ -57,7 +57,10 @@ function shuffleArray(arr, seed) {
 
   return result;
 }
-
+function seededRandom(seed) {
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
 function pickDailyWord() {
   const dict = getDictionaryArray();
 
@@ -73,10 +76,9 @@ function pickDailyWord() {
   if (nineLetterWords.length === 0) {
     return "NOTEBOOKS";
   }
-
-  const seed = getDailySeed();
-  return nineLetterWords[seed % nineLetterWords.length];
-}
+const seed = getDailySeed();
+  const index = Math.floor(seededRandom(seed) * nineLetterWords.length);
+return nineLetterWords[index];
 
 function renderLetters() {
   lettersEl.innerHTML = "";
