@@ -14,21 +14,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Letters In</title>
   <link rel="stylesheet" href="style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
-     crossorigin="anonymous"></script>
-</head>
-<script>
-  function showRules() {
-    document.getElementById("home-screen").style.display = "none";
-    document.getElementById("rules-screen").style.display = "block";
-  }
 
-  function startGame() {
-    document.getElementById("home-screen").style.display = "none";
-    document.getElementById("rules-screen").style.display = "none";
-    document.getElementById("game").style.display = "block";
-  }
-</script>
+  <!-- AdSense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
+    crossorigin="anonymous"></script>
+
+  <script>
+    function showRules() {
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("rules-screen").style.display = "block";
+    }
+
+    function startGame() {
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("rules-screen").style.display = "none";
+      document.getElementById("game").style.display = "block";
+    }
+  </script>
+</head>
+
 <body>
 
   <div class="home-page">
@@ -61,6 +66,20 @@
         <p>4. There will always be a 9 letter word.</p>
         <p>5. No words such as names and places.</p>
         <p>6. A new game begins at midnight GMT.</p>
+
+        <!-- Rules screen ad -->
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-7137119315620021"
+               data-ad-slot="5369699218"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
         <button onclick="startGame()">Start Game</button>
       </div>
