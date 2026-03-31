@@ -87,7 +87,7 @@ body {
   height: 7%;
 }
 
-/* PLAY NOW BUTTON HOTSPOT */
+/* PLAY NOW BUTTON */
 .play-button {
   position: absolute;
   left: 50%;
@@ -99,7 +99,7 @@ body {
   z-index: 9999;
 }
 
-/* CONTACT US HOTSPOT */
+/* CONTACT */
 .contact-link {
   bottom: 2.5%;
   right: 1.5%;
@@ -152,7 +152,7 @@ body {
   cursor: pointer;
 }
 
-/* GAME AREA */
+/* GAME */
 #game {
   width: 100%;
   max-width: 700px;
@@ -162,6 +162,7 @@ body {
   background: transparent;
 }
 
+/* MAIN TITLE */
 h1 {
   margin-top: 0;
   margin-bottom: 25px;
@@ -296,43 +297,52 @@ h1 {
   .rules-container p {
     font-size: 0.95rem;
   }
+
   .end-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .end-buttons button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .end-buttons button:hover {
+    opacity: 0.9;
+  }
 }
 
-.end-buttons button {
-  padding: 12px 20px;
-  font-size: 16px;
-  background-color: #2ecc71; /* nice green */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.end-buttons button:hover {
-  opacity: 0.9;
-}
-}
+/* ADS */
 .ad-container {
   margin: 20px auto;
   text-align: center;
 }
+
+/* SEO TEXT FIX */
 .seo-text {
-  position: relative;
   max-width: 600px;
-  margin: 20px auto;
+  margin: 10px auto;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   color: #ccc;
-  padding: 10px;
+  opacity: 0.7;
+  padding: 5px;
 }
 
-.home-container img {
-  width: 100%;
-  height: auto;
-  display: block;
+.seo-text h1 {
+  font-size: 1.2rem;
+  margin: 0 0 6px 0;
+  color: #ccc;
+}
+
+.seo-text p {
+  margin: 0;
 }

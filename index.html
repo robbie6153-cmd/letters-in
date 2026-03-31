@@ -1,102 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GFMC9780RY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GFMC9780RY');
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Word Shuffle</title>
-
+  <title>Letters In – Free Daily Word Game</title>
+<meta name="description" content="Play Letters In, a free daily word puzzle game. Find words from 9 letters and beat the timer.">
   <link rel="stylesheet" href="style.css">
+
+  <!-- AdSense -->
+  <script async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
+    crossorigin="anonymous"></script>
+
+  <script>
+    function showRules() {
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("rules-screen").style.display = "block";
+    }
+
+    function startGame() {
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("rules-screen").style.display = "none";
+      document.getElementById("game").style.display = "block";
+    }
+  </script>
 </head>
 
 <body>
 
-<!-- HOME SCREEN -->
-<div id="home-screen" class="screen active">
-  <div class="home-wrapper">
-    <img src="homepage.jpg" class="home-image">
-  </div>
-  <button type="button" class="play-btn" onclick="showRules()"></button>
+  <div class="home-page">
+
+    <div id="home-screen">
+      <div class="home-container">
+        <img src="homepage.jpg" alt="Letters In Home">
+
+        <a href="index.html" class="hotspot home-link" aria-label="Home"></a>
+        <a href="leaderboard.html" class="hotspot leaderboard-link" aria-label="Leaderboard"></a>
+        <a href="privacy.html" class="hotspot privacy-link" aria-label="Privacy Policy"></a>
+        <a href="terms.html" class="hotspot terms-link" aria-label="Terms and Conditions"></a>
+        <a href="about.html" class="hotspot about-link" aria-label="About"></a>
+        <a href="settings.html" class="hotspot settings-link" aria-label="Settings"></a>
+        <a href="profile.html" class="hotspot profile-link" aria-label="Profile"></a>
+
+        <div class="play-button" onclick="showRules()" aria-label="Play Now"></div>
+
+        <a href="contact.html" class="hotspot contact-link" aria-label="Contact Us"></a>
+      </div>
+    </div>
+</div> <!-- end of home-screen -->
+
+<div class="seo-text">
+  <h1>Letters In – Free Daily Word Game</h1>
+  <p>
+    Play Letters In, a free daily word puzzle game. Find as many words as possible from 9 letters before the timer runs out.
+    Perfect for fans of Wordle, anagrams, and brain training games.
+  </p>
 </div>
 
-<!-- RULES SCREEN -->
-<div id="rules-screen" class="screen">
+<div id="rules-screen" style="display:none;">
+      <div class="rules-container">
+        <h1>How To Play</h1>
 
-  <img src="background.jpg" class="bg-image">
+        <p>1. Make as many words as you can from the 9 letters in 200 seconds.</p>
+        <p>2. Words must be in the English dictionary and three letters or more.</p>
+        <p>3. You score one point per word, two points for a 6 letter word, three points for a 7 letter word, four points for an 8 letter word and five points for a 9 letter word.</p>
+        <p>4. There will always be a 9 letter word.</p>
+        <p>5. No words such as names and places.</p>
+        <p>6. A new game begins at midnight GMT.</p>
 
-  <div class="rules-box">
+        <!-- Rules screen ad -->
+        <div class="ad-container">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-7137119315620021"
+               data-ad-slot="5369699218"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
 
-    <h2>How to Play</h2>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
 
-    <p><strong>Time:</strong> You have 200 seconds to score as many points as possible.</p>
-
-    <p><strong>Move:</strong> Tap a tile next to the empty space to move it.</p>
-
-    <p><strong>Play:</strong> Tap <strong>Freeze Grid</strong>, then swipe to select words.</p>
-
-    <hr>
-
-    <ul>
-      <li>Words must be 3+ letters</li>
-      <li>English words only (no names)</li>
-      <li>Only words across and downwards can be swiped</li>
-      <li>Each word can only be used once</li>
-      <li>However, the same word can be used across & down</li>
-    </ul>
-
-    <hr>
-
-    <ul>
-      <li>3 letters = 1 point</li>
-      <li>4 letters = 2 points</li>
-      <li>5 letters = 3 points</li>
-      <li>+1 bonus per extra word per frozen screen</li>
-      <li>+5 chain bonus (AIR → HAIR → CHAIR)</li>
-      <li>There will always be at least one chain word</li>
-
-    </ul>
-
-    <button onclick="startGame()">Start Game</button>
-
-  </div>
-
-</div>
-
-<!-- GAME SCREEN -->
-<div id="game-screen" class="screen">
-
-  <div id="gameContainer">
-
-    <!-- TOP BAR -->
-    <div id="topBar">
-      <div>Score: <span id="score">0</span></div>
-      <div>Time: <span id="timer">200</span></div>
+        <button onclick="startGame()">Start Game</button>
+      </div>
     </div>
 
-    <!-- GAME BOARD -->
-    <div id="board"></div>
+    <div id="game" style="display:none;">
+      <h1>Letters In</h1>
 
-    <!-- BUTTON -->
-    <button id="freezeBtn">Freeze Grid</button>
+      <div id="letters"></div>
 
-    <!-- MESSAGE -->
-    <div id="message"></div>
+      <div id="infoBar">
+        <div id="timer">Time: <span id="time">200</span></div>
+        <div id="score">Score: <span id="points">0</span></div>
+      </div>
 
-  </div>
+      <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
+      <button id="submitBtn">Submit</button>
 
-  <!-- END SCREEN -->
-  <div id="endScreen">
-    <div id="endContent">
-      <h2 id="endMessage">Time’s up!</h2>
-      <button id="playAgainBtn">Play Again</button>
-      <button id="homeBtn">Home</button>
+      <div id="message"></div>
+      <div id="finalScore"></div>
     </div>
+
   </div>
 
-</div>
-
-<!-- SCRIPTS -->
-<script src="dictionary.js"></script>
-<script src="game.js"></script>
+  <script src="dictionary.js"></script>
+  <script src="game.js"></script>
 
 </body>
 </html>
