@@ -7,10 +7,6 @@ body {
   background: url("./background.jpg") center center / cover no-repeat;
 }
 
-.home-page {
-  width: 100%;
-}
-
 *,
 *::before,
 *::after {
@@ -38,56 +34,15 @@ body {
 }
 
 /* TOP MENU HOTSPOTS */
-.home-link {
-  top: 0.5%;
-  left: 0.5%;
-  width: 11%;
-  height: 7%;
-}
+.home-link { top: 0.5%; left: 0.5%; width: 11%; height: 7%; }
+.leaderboard-link { top: 0.5%; left: 12%; width: 16%; height: 7%; }
+.privacy-link { top: 0.5%; left: 28.5%; width: 21%; height: 7%; }
+.terms-link { top: 0.5%; left: 49.5%; width: 19%; height: 7%; }
+.about-link { top: 0.5%; left: 69%; width: 11%; height: 7%; }
+.settings-link { top: 0.5%; left: 80%; width: 11%; height: 7%; }
+.profile-link { top: 0.5%; left: 91%; width: 9%; height: 7%; }
 
-.leaderboard-link {
-  top: 0.5%;
-  left: 12%;
-  width: 16%;
-  height: 7%;
-}
-
-.privacy-link {
-  top: 0.5%;
-  left: 28.5%;
-  width: 21%;
-  height: 7%;
-}
-
-.terms-link {
-  top: 0.5%;
-  left: 49.5%;
-  width: 19%;
-  height: 7%;
-}
-
-.about-link {
-  top: 0.5%;
-  left: 69%;
-  width: 11%;
-  height: 7%;
-}
-
-.settings-link {
-  top: 0.5%;
-  left: 80%;
-  width: 11%;
-  height: 7%;
-}
-
-.profile-link {
-  top: 0.5%;
-  left: 91%;
-  width: 9%;
-  height: 7%;
-}
-
-/* PLAY NOW BUTTON */
+/* PLAY BUTTON */
 .play-button {
   position: absolute;
   left: 50%;
@@ -107,69 +62,48 @@ body {
   height: 6%;
 }
 
-/* RULES SCREEN */
+/* RULES */
 #rules-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0,0,0,0.85);
   z-index: 9999;
   display: none;
   justify-content: center;
   align-items: center;
 }
 
-/* RULES BOX */
 .rules-container {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255,255,255,0.95);
   color: black;
   padding: 25px;
   max-width: 500px;
   width: 90%;
   border-radius: 14px;
   text-align: left;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  animation: fadeInScale 0.25s ease;
 }
 
 .rules-container h1 {
-  margin-top: 0;
-  margin-bottom: 20px;
+  margin: 0 0 20px;
   font-size: 2rem;
   text-align: center;
 }
 
 .rules-container p {
-  margin: 0 0 14px 0;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-@keyframes fadeInScale {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  margin: 0 0 14px;
 }
 
 .rules-container button {
   display: block;
   margin: 25px auto 0;
   padding: 14px 28px;
-  font-size: 1.1rem;
-  font-weight: bold;
   background: #2e8b57;
-  transition: 0.2s;
   color: white;
   border: none;
   border-radius: 10px;
-  cursor: pointer;
 }
 
 /* GAME */
@@ -178,30 +112,27 @@ body {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px 12px 120px;
-  text-align: center;
-  color: white;
-  background: transparent;
-  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* MAIN TITLE */
+/* TITLE */
 h1 {
-  margin-top: 20px;
-  margin-bottom: 20px;
   font-size: 3rem;
   color: black;
-  text-align: center;
+  margin: 20px 0;
 }
 
 /* LETTERS */
 #letters {
-  display: grid !important;
-  grid-template-columns: repeat(5, 56px) !important;
-  justify-content: center !important;
-  gap: 10px !important;
-  margin: 20px auto !important;
-  width: fit-content !important;
+  display: grid;
+  grid-template-columns: repeat(5, 56px);
+  gap: 10px;
+  justify-content: center;
+  margin: 20px auto;
 }
+
 .tile {
   width: 56px;
   height: 56px;
@@ -213,108 +144,55 @@ h1 {
   font-size: 2rem;
   font-weight: bold;
   border-radius: 8px;
-  box-shadow: 0 4px 0 #3f4952, 0 6px 12px rgba(0, 0, 0, 0.35);
-  user-select: none;
+  box-shadow: 0 4px 0 #3f4952;
 }
 
-/* INFO BAR */
+/* INFO */
 #infoBar {
   display: flex;
-  justify-content: center;
   gap: 25px;
-  margin: 10px auto 20px;
-  font-size: 1.2rem;
+  margin: 10px 0 20px;
   font-weight: bold;
   color: black;
-  text-align: center;
 }
 
-/* INPUT AREA */
+/* INPUT */
 .input-row {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto 15px;
+  gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 #wordInput {
   width: 220px;
-  max-width: 100%;
   padding: 12px;
-  font-size: 1rem;
-  border: none;
   border-radius: 8px;
-  outline: none;
-  margin: 0;
+  border: none;
 }
 
 #submitBtn {
   padding: 12px 16px;
-  font-size: 1rem;
-  border: none;
   border-radius: 8px;
-  cursor: pointer;
-  margin: 0;
+  border: none;
 }
 
 /* MESSAGES */
 #message,
 #finalScore {
-  margin-top: 18px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  margin-top: 15px;
   color: black;
-}
-
-/* OTHER PAGES */
-.page-container {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 20px;
-  text-align: center;
-  color: black;
-}
-
-.back-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 14px;
-  background: #2e8b57;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
-  #letters {
-    display: grid !important;
-    grid-template-columns: repeat(5, 42px) !important;
-    justify-content: center !important;
-    gap: 8px !important;
-    margin: 20px auto !important;
-    width: fit-content !important;
-  }
-
-  .tile {
-    width: 42px;
-    height: 42px;
-    font-size: 1.4rem;
-  }
-
-
   h1 {
     font-size: 2rem;
-    margin-top: 20px;
-    margin-bottom: 15px;
   }
 
   #letters {
-    max-width: 240px;
+    grid-template-columns: repeat(5, 42px);
     gap: 8px;
-    margin: 20px auto;
   }
 
   .tile {
@@ -326,81 +204,17 @@ h1 {
   #infoBar {
     flex-direction: column;
     gap: 8px;
-    margin: 10px auto 15px;
   }
 
   .input-row {
     flex-direction: column;
-    gap: 10px;
   }
 
   #wordInput {
-    width: 220px;
-    max-width: 90%;
+    width: 90%;
   }
 
   #submitBtn {
     width: 120px;
   }
-
-  .rules-container {
-    margin: 20px 12px;
-    padding: 20px;
-  }
-
-  .rules-container h1 {
-    font-size: 1.8rem;
-  }
-
-  .rules-container p {
-    font-size: 0.95rem;
-  }
-
-  .end-buttons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .end-buttons button {
-    padding: 12px 20px;
-    font-size: 16px;
-    background-color: #2ecc71;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .end-buttons button:hover {
-    opacity: 0.9;
-  }
-}
-
-/* ADS */
-.ad-container {
-  margin: 20px auto;
-  text-align: center;
-}
-
-/* SEO TEXT FIX */
-.seo-text {
-  max-width: 600px;
-  margin: 10px auto;
-  text-align: center;
-  font-size: 12px;
-  color: #ccc;
-  opacity: 0.7;
-  padding: 5px;
-}
-
-.seo-text h1 {
-  font-size: 1.2rem;
-  margin: 0 0 6px 0;
-  color: #ccc;
-}
-
-.seo-text p {
-  margin: 0;
 }
