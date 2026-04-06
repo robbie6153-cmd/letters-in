@@ -124,7 +124,13 @@ h1 {
   color: black;
   margin: 24px 0;
 }
-
+.subheading {
+  font-size: 1.4rem;
+  font-weight: normal;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  color: #333;
+}
 /* LETTERS */
 #letters {
   display: grid;
@@ -197,7 +203,9 @@ h1 {
   #game {
     padding: 24px 16px 140px;
   }
-
+.subheading {
+  font-size: 1.2rem;
+}
   h1 {
     font-size: 3rem;
     margin: 20px 0 18px;
