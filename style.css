@@ -1,10 +1,11 @@
-body {
+html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   min-height: 100vh;
   font-family: Arial, sans-serif;
   background: url("./background.jpg") center center / cover no-repeat;
+  overflow-x: hidden;
 }
 
 *,
@@ -159,24 +160,29 @@ h1 {
 /* INPUT */
 .input-row {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0 auto 20px;
 }
 
 #wordInput {
-  width: 260px;
+  width: 280px;
+  max-width: 90%;
   padding: 14px;
-  border-radius: 8px;
-  border: none;
   font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  text-align: center;
 }
 
 #submitBtn {
-  padding: 14px 18px;
-  border-radius: 8px;
-  border: none;
+  width: 180px;
+  padding: 14px;
   font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
 }
 
 /* MESSAGES */
