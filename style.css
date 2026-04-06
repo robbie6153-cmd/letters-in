@@ -195,14 +195,13 @@ h1 {
 
 /* LETTERS */
 #letters {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px auto;
-  max-width: 320px;
+  display: grid !important;
+  grid-template-columns: repeat(5, 56px) !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  margin: 20px auto !important;
+  width: fit-content !important;
 }
-
 .tile {
   width: 56px;
   height: 56px;
@@ -290,10 +289,21 @@ h1 {
 
 /* MOBILE */
 @media (max-width: 768px) {
-  #game {
-    max-width: 100%;
-    padding: 20px 10px 120px;
+  #letters {
+    display: grid !important;
+    grid-template-columns: repeat(5, 42px) !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 20px auto !important;
+    width: fit-content !important;
   }
+
+  .tile {
+    width: 42px;
+    height: 42px;
+    font-size: 1.4rem;
+  }
+
 
   h1 {
     font-size: 2rem;
