@@ -125,11 +125,12 @@ h1 {
   margin: 24px 0;
 }
 .subheading {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: normal;
   margin-top: -10px;
   margin-bottom: 20px;
   color: #333;
+  text-align:center;
 }
 /* LETTERS */
 #letters {
@@ -209,6 +210,7 @@ h1 {
   h1 {
     font-size: 3rem;
     margin: 20px 0 18px;
+    text-align: center;
   }
 
   #letters {
