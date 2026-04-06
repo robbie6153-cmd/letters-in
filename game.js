@@ -7,7 +7,7 @@ let timerInterval;
 
 const lettersEl = document.getElementById("letters");
 const timeEl = document.getElementById("time");
-const scoreEl = document.getElementById("points");
+const scoreEl = document.getElementById("score");
 const inputEl = document.getElementById("wordInput");
 const submitBtn = document.getElementById("submitBtn");
 const messageEl = document.getElementById("message");
