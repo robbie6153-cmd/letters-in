@@ -187,13 +187,14 @@ function endGame() {
 
 function showRules() {
   document.getElementById("home-screen").style.display = "none";
-  document.getElementById("rules-screen").style.display = "block";
+  document.getElementById("rules-screen").style.display = "flex";
 }
 
 function startGame() {
   document.getElementById("home-screen").style.display = "none";
+  document.getElementById("home-content").style.display = "none"; // 👈 NEW
   document.getElementById("rules-screen").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  document.getElementById("game").style.display = "flex";
 
   finalScoreEl.innerHTML = "";
   messageEl.textContent = "";
