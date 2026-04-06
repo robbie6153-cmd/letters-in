@@ -17,7 +17,7 @@ function goHome() {
   clearInterval(timerInterval);
   document.getElementById("game").style.display = "none";
   document.getElementById("rules-screen").style.display = "none";
-  document.getElementById("home-screen").style.display = "block";
+  document.getElementById("home-screen").style.display = "flex";
 }
 
 function submitScore() {
