@@ -272,3 +272,10 @@ h1 {
 .more-games a:hover {
   text-decoration: underline;
 }
+.brain-quote {
+  margin-top: 20px;
+  padding: 15px;
+  font-style: italic;
+  background: rgba(0,0,0,0.05);
+  border-left: 4px solid #00c3ff;
+}
