@@ -23,13 +23,17 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
     crossorigin="anonymous"></script>
 
-  <script>
-    function startGame() {
-      document.getElementById("home-screen").style.display = "none";
-      document.getElementById("home-content").style.display = "none";
-      document.getElementById("game").style.display = "block";
+ <script>
+  function showGameScreen() {
+    document.getElementById("home-screen").style.display = "none";
+    document.getElementById("home-content").style.display = "none";
+    document.getElementById("game").style.display = "block";
+
+    if (typeof startGame === "function") {
+      startGame();
     }
-  </script>
+  }
+</script>
 </head>
 
 <body>
@@ -48,7 +52,7 @@
     <a href="profile.html" class="hotspot profile-link"></a>
 
     <!-- PLAY NOW (DIRECT START) -->
-    <div class="play-button" onclick="startGame()"></div>
+   <div class="play-button" onclick="showGameScreen()"></div>
 
     <a href="contact.html" class="hotspot contact-link"></a>
   </div>
