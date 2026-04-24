@@ -50,8 +50,9 @@ function pickDailyWord() {
   const dict = getDictionaryArray();
 
   if (!dict) {
-    return "NOTEBOOKS";
-  }
+  messageEl.textContent = "Dictionary not loaded.";
+  return "CHOCOLATE";
+}
 
   const nineLetterWords = dict
     .filter(word => typeof word === "string")
@@ -59,11 +60,12 @@ function pickDailyWord() {
     .filter(word => /^[A-Z]{9}$/.test(word));
 
   if (nineLetterWords.length === 0) {
-    return "NOTEBOOKS";
-  }
+  messageEl.textContent = "No 9-letter words found.";
+  return "NOTEBOOKS";
+}
 
-  const seed = getDailySeed();
-  return nineLetterWords[seed % nineLetterWords.length];
+const index = Math.floor(Math.sin(seed) * 10000) % nineLetterWords.length;
+return nineLetterWords[Math.abs(index)];
 }
 
 function renderLetters() {
