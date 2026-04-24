@@ -301,7 +301,7 @@ h1 {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 68%; /* adjust slightly if needed */
+  top: 85%; /* adjust slightly if needed */
 
   background: rgba(0, 0, 0, 0.7);
   color: white;
