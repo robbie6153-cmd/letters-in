@@ -3,9 +3,8 @@ import { auth, db } from "./firebase-config.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
-  sendEmailVerification,
   sendPasswordResetEmail,
+  signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
@@ -13,125 +12,122 @@ import {
   doc,
   setDoc,
   getDoc,
+  addDoc,
+  collection,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-const emailInput = document.getElementById("authEmail");
-const passwordInput = document.getElementById("authPassword");
-const usernameInput = document.getElementById("authUsername");
-
-const signupBtn = document.getElementById("signupBtn");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
-const authStatus = document.getElementById("authStatus");
-
-signupBtn.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-  const username = usernameInput.value.trim();
-
-  if (!email || !password || !username) {
-    authStatus.textContent = "Enter email, password and username.";
-    return;
-  }
-
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    await setDoc(doc(db, "users", user.uid), {
-      username: username,
-      email: email,
-      emailVerified: false,
-      createdAt: serverTimestamp()
-    });
-
-    await sendEmailVerification(user);
-
-    authStatus.textContent = "Account created. Please check your email to verify your account.";
-  } catch (error) {
-    authStatus.textContent = error.message;
-  }
-});
-
-loginBtn.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
-
-  if (!email || !password) {
-    authStatus.textContent = "Enter email and password.";
-    return;
-  }
-
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-
-    if (!user.emailVerified) {
-      authStatus.textContent = "Please verify your email before using leaderboards.";
-    }
-  } catch (error) {
-    authStatus.textContent = error.message;
-  }
-});
-
-logoutBtn.addEventListener("click", async () => {
-  await signOut(auth);
-});
-
-if (forgotPasswordBtn) {
-  forgotPasswordBtn.addEventListener("click", async () => {
-    const email = emailInput.value.trim();
-
-    if (!email) {
-      authStatus.textContent = "Enter your email first.";
-      return;
-    }
-
-    try {
-      await sendPasswordResetEmail(auth, email);
-      authStatus.textContent = "Password reset email sent.";
-    } catch (error) {
-      authStatus.textContent = error.message;
-    }
-  });
-}
+let currentUser = null;
+let currentUsername = null;
 
 onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  window.robTechCurrentUser = user;
+
   if (user) {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    let username = user.email;
-
     if (userSnap.exists()) {
-      username = userSnap.data().username;
+      currentUsername = userSnap.data().username || user.email;
+    } else {
+      currentUsername = user.email;
     }
 
-    authStatus.textContent = user.emailVerified
-      ? "Logged in as " + username
-      : "Logged in, but email not verified.";
-
-    loginBtn.style.display = "none";
-    signupBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    usernameInput.style.display = "none";
-
-    window.currentRobTechUser = {
-      uid: user.uid,
-      email: user.email,
-      username: username,
-      emailVerified: user.emailVerified
-    };
+    window.robTechUsername = currentUsername;
   } else {
-    authStatus.textContent = "Not logged in";
-
-    loginBtn.style.display = "inline-block";
-    signupBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    usernameInput.style.display = "inline-block";
-
-    window.currentRobTechUser = null;
+    currentUsername = null;
+    window.robTechUsername = null;
   }
 });
+
+window.signUp = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim();
+
+  if (!email || !password || !username) {
+    alert("Please enter email, password and username.");
+    return;
+  }
+
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      email: email,
+      username: username,
+      createdAt: serverTimestamp()
+    });
+
+    alert("Account created. You are now logged in.");
+    window.location.href = "index.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.logIn = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please enter email and password.");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Logged in.");
+    window.location.href = "index.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.forgotPassword = async function () {
+  const email = document.getElementById("email").value.trim();
+
+  if (!email) {
+    alert("Enter your email first.");
+    return;
+  }
+
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert("Password reset email sent.");
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+window.logOut = async function () {
+  await signOut(auth);
+  alert("Logged out.");
+};
+
+window.submitRobTechScore = async function (score) {
+  if (!auth.currentUser) {
+    alert("You need to create an account or log in to submit your score.");
+    return;
+  }
+
+  const uid = auth.currentUser.uid;
+  const username = window.robTechUsername || auth.currentUser.email;
+
+  try {
+    await addDoc(collection(db, "leaderboards", "letters-in", "scores"), {
+      uid: uid,
+      username: username,
+      score: score,
+      game: "letters-in",
+      createdAt: serverTimestamp()
+    });
+
+    alert("Score submitted to leaderboard!");
+    window.location.href = "leaderboard.html";
+  } catch (error) {
+    alert(error.message);
+  }
+};
