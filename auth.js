@@ -4,6 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  sendEmailVerification,
+  sendPasswordResetEmail,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
@@ -21,6 +23,7 @@ const usernameInput = document.getElementById("authUsername");
 const signupBtn = document.getElementById("signupBtn");
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
+const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
 const authStatus = document.getElementById("authStatus");
 
 signupBtn.addEventListener("click", async () => {
@@ -40,10 +43,13 @@ signupBtn.addEventListener("click", async () => {
     await setDoc(doc(db, "users", user.uid), {
       username: username,
       email: email,
+      emailVerified: false,
       createdAt: serverTimestamp()
     });
 
-    authStatus.textContent = "Account created: " + username;
+    await sendEmailVerification(user);
+
+    authStatus.textContent = "Account created. Please check your email to verify your account.";
   } catch (error) {
     authStatus.textContent = error.message;
   }
@@ -59,7 +65,12 @@ loginBtn.addEventListener("click", async () => {
   }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    if (!user.emailVerified) {
+      authStatus.textContent = "Please verify your email before using leaderboards.";
+    }
   } catch (error) {
     authStatus.textContent = error.message;
   }
@@ -68,6 +79,24 @@ loginBtn.addEventListener("click", async () => {
 logoutBtn.addEventListener("click", async () => {
   await signOut(auth);
 });
+
+if (forgotPasswordBtn) {
+  forgotPasswordBtn.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      authStatus.textContent = "Enter your email first.";
+      return;
+    }
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      authStatus.textContent = "Password reset email sent.";
+    } catch (error) {
+      authStatus.textContent = error.message;
+    }
+  });
+}
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -80,7 +109,9 @@ onAuthStateChanged(auth, async (user) => {
       username = userSnap.data().username;
     }
 
-    authStatus.textContent = "Logged in as " + username;
+    authStatus.textContent = user.emailVerified
+      ? "Logged in as " + username
+      : "Logged in, but email not verified.";
 
     loginBtn.style.display = "none";
     signupBtn.style.display = "none";
@@ -90,7 +121,8 @@ onAuthStateChanged(auth, async (user) => {
     window.currentRobTechUser = {
       uid: user.uid,
       email: user.email,
-      username: username
+      username: username,
+      emailVerified: user.emailVerified
     };
   } else {
     authStatus.textContent = "Not logged in";
