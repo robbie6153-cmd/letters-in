@@ -4,6 +4,7 @@ let usedWords = new Set();
 let currentWord = "";
 let shuffledLetters = [];
 let timerInterval;
+let gameStarted = false;
 
 const lettersEl = document.getElementById("letters");
 const timeEl = document.getElementById("time");
@@ -138,6 +139,17 @@ function submitWord() {
 }
 
 function submitScore() {
+  const loggedInUser =
+    window.robTechCurrentUser ||
+    window.currentUser ||
+    (window.auth && window.auth.currentUser) ||
+    null;
+
+  if (!loggedInUser) {
+    showAccountOptions();
+    return;
+  }
+
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
   } else {
@@ -177,18 +189,22 @@ function showAccountOptions() {
 }
 
 function showCreateAccount() {
-  window.location.href = "signup.html";
+  window.location.href = "account.html";
 }
 
 function showLogin() {
-  window.location.href = "login.html";
+  window.location.href = "account.html";
 }
+
 
 function goHome() {
   window.location.href = "index.html";
 }
 
 function startGame() {
+  if (gameStarted) return;
+  gameStarted = true;
+
   currentWord = pickDailyWord();
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
@@ -219,5 +235,3 @@ window.submitScore = submitScore;
 window.showCreateAccount = showCreateAccount;
 window.showLogin = showLogin;
 window.goHome = goHome;
-
-startGame();
