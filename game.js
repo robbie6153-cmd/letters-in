@@ -3,6 +3,7 @@ let timeLeft = 200;
 let usedWords = new Set();
 let currentWord = "";
 let shuffledLetters = [];
+let timerInterval;
 
 const lettersEl = document.getElementById("letters");
 const timeEl = document.getElementById("time");
@@ -13,12 +14,8 @@ const messageEl = document.getElementById("message");
 const finalScoreEl = document.getElementById("finalScore");
 
 function getDictionaryArray() {
-  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) {
-    return dictionary;
-  }
-  if (typeof words !== "undefined" && Array.isArray(words)) {
-    return words;
-  }
+  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) return dictionary;
+  if (typeof words !== "undefined" && Array.isArray(words)) return words;
   return null;
 }
 
@@ -81,11 +78,13 @@ function renderLetters() {
 
 function canMakeWordFromLetters(word, letters) {
   const available = [...letters];
+
   for (const char of word) {
     const index = available.indexOf(char);
     if (index === -1) return false;
     available.splice(index, 1);
   }
+
   return true;
 }
 
@@ -124,7 +123,7 @@ function submitWord() {
     return;
   }
 
-  if (dict && !getDictionaryArray().map(w => String(w).trim().toUpperCase()).includes(word)) {
+  if (dict && !dict.map(w => String(w).trim().toUpperCase()).includes(word)) {
     messageEl.textContent = "That word is not in the dictionary.";
     inputEl.value = "";
     return;
@@ -138,8 +137,17 @@ function submitWord() {
   inputEl.value = "";
 }
 
+function submitScore() {
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(score);
+  } else {
+    showAccountOptions();
+  }
+}
+
 function endGame() {
   clearInterval(timerInterval);
+
   inputEl.disabled = true;
   submitBtn.disabled = true;
   messageEl.textContent = "";
@@ -159,10 +167,10 @@ function showAccountOptions() {
 
   finalScoreEl.innerHTML += `
     <div id="accountRequiredBox" style="margin-top:15px;">
-      <p>You need an account to submit your score.</p>
+      <p>You need to create an account or log in to submit your score.</p>
 
       <button onclick="showCreateAccount()">Create account</button>
-      <button onclick="showLogin()">Log in</button>
+      <button onclick="showLogin()">Already have account</button>
       <button onclick="goHome()">Home</button>
     </div>
   `;
@@ -176,6 +184,29 @@ function showLogin() {
   window.location.href = "login.html";
 }
 
+function goHome() {
+  window.location.href = "index.html";
+}
+
+function startGame() {
+  currentWord = pickDailyWord();
+  shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
+  renderLetters();
+
+  timeEl.textContent = timeLeft;
+  scoreEl.textContent = score;
+
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timeEl.textContent = timeLeft;
+
+    if (timeLeft <= 0) {
+      timeEl.textContent = 0;
+      endGame();
+    }
+  }, 1000);
+}
+
 submitBtn.addEventListener("click", submitWord);
 
 inputEl.addEventListener("keydown", function (e) {
@@ -184,20 +215,9 @@ inputEl.addEventListener("keydown", function (e) {
   }
 });
 
-currentWord = pickDailyWord();
-shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
-renderLetters();
-
 window.submitScore = submitScore;
 window.showCreateAccount = showCreateAccount;
 window.showLogin = showLogin;
 window.goHome = goHome;
 
-const timerInterval = setInterval(() => {
-  timeLeft--;
-  timeEl.textContent = timeLeft;
-  if (timeLeft <= 0) {
-    timeEl.textContent = 0;
-    endGame();
-  }
-}, 1000);
+startGame();
