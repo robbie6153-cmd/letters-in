@@ -35,7 +35,7 @@ function submitScore() {
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
   } else {
-    alert("Leaderboard is still loading. Try again in a moment.");
+    alert("You must create a RobTechUK Games account to submit your score to the leaderboard.");
   }
 }
 
