@@ -1,25 +1,25 @@
-import { db } from "./firebase-config.js";
-import {
-  collection,
-  addDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Letters In Leaderboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-const GAME_ID = "lettersin";
+  <h1>Letters In Leaderboard</h1>
 
-window.submitRobTechScore = async function(score) {
-  if (!window.currentRobTechUser) {
-    alert("You must create a RobTechUK Games account to submit your score to the leaderboard.");
-    return;
-  }
+  <div id="leaderboardList">
+    Loading leaderboard...
+  </div>
 
-  await addDoc(collection(db, "leaderboards_lettersin"), {
-    uid: window.currentRobTechUser.uid,
-    username: window.currentRobTechUser.username,
-    score: Number(score),
-    game: GAME_ID,
-    createdAt: serverTimestamp()
-  });
+  <p>
+    <a href="index.html">Back to game</a>
+  </p>
 
-  window.location.href = "leaderboard.html";
-};
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="leaderboard.js"></script>
+
+</body>
+</html>
