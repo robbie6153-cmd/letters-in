@@ -50,9 +50,9 @@ function pickDailyWord() {
   const dict = getDictionaryArray();
 
   if (!dict) {
-  messageEl.textContent = "Dictionary not loaded.";
-  return "CHOCOLATE";
-}
+    messageEl.textContent = "Dictionary not loaded.";
+    return "CHOCOLATE";
+  }
 
   const nineLetterWords = dict
     .filter(word => typeof word === "string")
@@ -60,12 +60,13 @@ function pickDailyWord() {
     .filter(word => /^[A-Z]{9}$/.test(word));
 
   if (nineLetterWords.length === 0) {
-  messageEl.textContent = "No 9-letter words found.";
-  return "NOTEBOOKS";
-}
+    messageEl.textContent = "No 9-letter words found.";
+    return "NOTEBOOKS";
+  }
 
-const index = Math.floor(Math.sin(seed) * 10000) % nineLetterWords.length;
-return nineLetterWords[Math.abs(index)];
+  const seed = getDailySeed();
+  const index = Math.floor(Math.sin(seed) * 10000) % nineLetterWords.length;
+  return nineLetterWords[Math.abs(index)];
 }
 
 function renderLetters() {
@@ -140,18 +141,42 @@ function submitScore() {
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
   } else {
-    alert("You must create a RobTechUK Games account to submit your score to the leaderboard.");
+    showAccountOptions();
   }
 }
+
 function endGame() {
   clearInterval(timerInterval);
   inputEl.disabled = true;
   submitBtn.disabled = true;
   messageEl.textContent = "";
+
   finalScoreEl.innerHTML = `
-  <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
-  <button onclick="submitScore()">Submit Score</button>
-`;
+    <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
+    <button onclick="submitScore()">Submit Score</button>
+  `;
+}
+
+function showAccountOptions() {
+  if (document.getElementById("accountRequiredBox")) return;
+
+  finalScoreEl.innerHTML += `
+    <div id="accountRequiredBox" style="margin-top:15px;">
+      <p>You need an account to submit your score.</p>
+
+      <button onclick="showCreateAccount()">Create account</button>
+      <button onclick="showLogin()">Log in</button>
+      <button onclick="goHome()">Home</button>
+    </div>
+  `;
+}
+
+function showCreateAccount() {
+  window.location.href = "signup.html";
+}
+
+function showLogin() {
+  window.location.href = "login.html";
 }
 
 submitBtn.addEventListener("click", submitWord);

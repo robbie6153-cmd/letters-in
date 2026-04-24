@@ -279,3 +279,21 @@ h1 {
   background: rgba(0,0,0,0.05);
   border-left: 4px solid #00c3ff;
 }
+.account-required-box {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.account-required-box button {
+  display: block;
+  width: 90%;
+  max-width: 260px;
+  margin: 8px auto;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
