@@ -180,7 +180,10 @@ function showRules() {
 
 function startGame() {
   document.getElementById("home-screen").style.display = "none";
-  document.getElementById("home-content").style.display = "none"; // 👈 NEW
+const homeContent = document.getElementById("home-content");
+if (homeContent) {
+  homeContent.style.display = "none";
+}
   document.getElementById("rules-screen").style.display = "none";
   document.getElementById("game").style.display = "flex";
 
