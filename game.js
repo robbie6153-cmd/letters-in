@@ -7,58 +7,51 @@ let timerInterval;
 
 const lettersEl = document.getElementById("letters");
 const timeEl = document.getElementById("time");
-const scoreEl = document.getElementById("points");
+const scoreEl = document.getElementById("score");
 const inputEl = document.getElementById("wordInput");
 const submitBtn = document.getElementById("submitBtn");
 const messageEl = document.getElementById("message");
 const finalScoreEl = document.getElementById("finalScore");
 
+function hideIfExists(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = "none";
+}
+
+function showIfExists(id, displayType) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = displayType;
+}
+
 function goHome() {
   clearInterval(timerInterval);
-  document.getElementById("game").style.display = "none";
-  document.getElementById("rules-screen").style.display = "none";
-  document.getElementById("home-screen").style.display = "block";
+  hideIfExists("game");
+  hideIfExists("rules-screen");
+  showIfExists("home-screen", "flex");
+  showIfExists("home-content", "block");
 }
 
 function submitScore() {
-  alert("Score submission coming soon!");
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(score);
+  } else {
+    alert("You must create a RobTechUK Games account to submit your score to the leaderboard.");
+  }
 }
 
 function getDictionaryArray() {
-  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) {
-    return dictionary;
-  }
-  if (typeof words !== "undefined" && Array.isArray(words)) {
-    return words;
-  }
+  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) return dictionary;
+  if (typeof words !== "undefined" && Array.isArray(words)) return words;
   return null;
 }
 
 function getDailySeed() {
   const today = new Date();
-  return Number(
-    `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`
-  );
+  return Number(`${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`);
 }
 
-function shuffleArray(arr, seed) {
-  const result = [...arr];
-  let randomSeed = seed;
-
-  function seededRandom() {
-    randomSeed = (randomSeed * 9301 + 49297) % 233280;
-    return randomSeed / 233280;
-  }
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(seededRandom() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
 function seededRandom(seed) {
-  let x = Math.sin(seed) * 10000;
+  const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);
 }
 
@@ -78,18 +71,14 @@ function shuffleArray(arr, seed) {
 function pickDailyWord() {
   const dict = getDictionaryArray();
 
-  if (!dict || dict.length === 0) {
-    return "NOTEBOOKS";
-  }
+  if (!dict || dict.length === 0) return "NOTEBOOKS";
 
   const nineLetterWords = dict
     .filter(word => typeof word === "string")
     .map(word => word.trim().toUpperCase())
     .filter(word => /^[A-Z]{9}$/.test(word));
 
-  if (nineLetterWords.length === 0) {
-    return "NOTEBOOKS";
-  }
+  if (nineLetterWords.length === 0) return "NOTEBOOKS";
 
   const seed = getDailySeed();
   const index = Math.floor(seededRandom(seed) * nineLetterWords.length);
@@ -98,7 +87,14 @@ function pickDailyWord() {
 }
 
 function renderLetters() {
+  if (!lettersEl) {
+    alert("Missing letters div in HTML");
+    return;
+  }
+
+  lettersEl.style.display = "flex";
   lettersEl.innerHTML = "";
+
   shuffledLetters.forEach(letter => {
     const tile = document.createElement("div");
     tile.className = "tile";
@@ -109,11 +105,13 @@ function renderLetters() {
 
 function canMakeWordFromLetters(word, letters) {
   const available = [...letters];
+
   for (const char of word) {
     const index = available.indexOf(char);
     if (index === -1) return false;
     available.splice(index, 1);
   }
+
   return true;
 }
 
@@ -186,19 +184,30 @@ function endGame() {
 }
 
 function showRules() {
-  document.getElementById("home-screen").style.display = "none";
-  document.getElementById("rules-screen").style.display = "block";
+  hideIfExists("home-screen");
+  showIfExists("rules-screen", "flex");
 }
 
 function startGame() {
-  document.getElementById("home-screen").style.display = "none";
-  document.getElementById("rules-screen").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  score = 0;
+  timeLeft = 200;
+  usedWords = new Set();
+
+  scoreEl.textContent = score;
+  timeEl.textContent = timeLeft;
+
+  hideIfExists("home-screen");
+  hideIfExists("home-content");
+  hideIfExists("rules-screen");
+  showIfExists("game", "flex");
 
   finalScoreEl.innerHTML = "";
   messageEl.textContent = "";
+  inputEl.value = "";
   inputEl.disabled = false;
   submitBtn.disabled = false;
+
+  loadGameLettersAndTimer();
 }
 
 submitBtn.addEventListener("click", submitWord);
@@ -209,10 +218,12 @@ inputEl.addEventListener("keydown", function (e) {
   }
 });
 
-setTimeout(() => {
+function loadGameLettersAndTimer() {
   currentWord = pickDailyWord();
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
+
+  clearInterval(timerInterval);
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -223,4 +234,4 @@ setTimeout(() => {
       endGame();
     }
   }, 1000);
-}, 2000);
+}
