@@ -137,13 +137,6 @@ function submitWord() {
   messageEl.textContent = `Accepted: ${word} (+${points})`;
   inputEl.value = "";
 }
-function submitScore() {
-  if (typeof window.submitRobTechScore === "function") {
-    window.submitRobTechScore(score);
-  } else {
-    showAccountOptions();
-  }
-}
 
 function endGame() {
   clearInterval(timerInterval);
