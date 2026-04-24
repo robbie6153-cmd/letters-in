@@ -165,15 +165,22 @@ function endGame() {
   messageEl.textContent = "";
 
   finalScoreEl.innerHTML = `
-    <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
-    <button id="finalSubmitScoreBtn">Submit Score</button>
-  `;
+  <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
+
+  <div class="end-buttons">
+    <button id="finalSubmitScoreBtn" class="submit-score-btn">Submit Score</button>
+    <button onclick="goToLeaderboard()" class="leaderboard-btn">View Leaderboard</button>
+  </div>
+`;
 
   document
     .getElementById("finalSubmitScoreBtn")
     .addEventListener("click", submitScore);
 }
 
+function goToLeaderboard() {
+  window.location.href = "leaderboard.html";
+}
 function showAccountOptions() {
   if (document.getElementById("accountRequiredBox")) return;
 
