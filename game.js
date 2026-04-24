@@ -21,7 +21,11 @@ function goHome() {
 }
 
 function submitScore() {
-  alert("Score submission coming soon!");
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(score);
+  } else {
+    alert("Leaderboard is still loading. Try again in a moment.");
+  }
 }
 
 function getDictionaryArray() {
@@ -41,22 +45,6 @@ function getDailySeed() {
   );
 }
 
-function shuffleArray(arr, seed) {
-  const result = [...arr];
-  let randomSeed = seed;
-
-  function seededRandom() {
-    randomSeed = (randomSeed * 9301 + 49297) % 233280;
-    return randomSeed / 233280;
-  }
-
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(seededRandom() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-
-  return result;
-}
 function seededRandom(seed) {
   let x = Math.sin(seed) * 10000;
   return x - Math.floor(x);

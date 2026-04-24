@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaderboard - RobTechUK</title>
-  <link rel="stylesheet" href="style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
-     crossorigin="anonymous"></script>
-</head>
-<body>
+import { db } from "./firebase-config.js";
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-  <div class="page-container">
-    <h1>Leaderboard (Coming Soon)</h1>
+const GAME_ID = "lettersin";
 
-<p>
-We are currently developing a leaderboard feature that will allow players to create usernames and compete against others on a daily basis.
-</p>
+window.submitRobTechScore = async function(score) {
+  if (!window.currentRobTechUser) {
+    alert("You must create a RobTechUK Games account to submit your score to the leaderboard.");
+    return;
+  }
 
-<p>
-Once accounts are introduced, players will be able to track their scores, compare results with others, and see how they rank each day.
-</p>
+  await addDoc(collection(db, "leaderboards_lettersin"), {
+    uid: window.currentRobTechUser.uid,
+    username: window.currentRobTechUser.username,
+    score: Number(score),
+    game: GAME_ID,
+    createdAt: serverTimestamp()
+  });
 
-<p>
-The goal is to create a competitive but fair system where all players face the same daily challenge.
-</p>
-
-<p>
-This feature is currently in development and will be introduced in a future update.
-</p>
-
-    <a href="index.html" class="home-button">Return to Home</a>
-
-  </div>
-
-</body>
-</html>
+  window.location.href = "leaderboard.html";
+};
