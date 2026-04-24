@@ -146,8 +146,12 @@ function endGame() {
 
   finalScoreEl.innerHTML = `
     <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
-    <button onclick="submitScore()">Submit Score</button>
+    <button id="finalSubmitScoreBtn">Submit Score</button>
   `;
+
+  document
+    .getElementById("finalSubmitScoreBtn")
+    .addEventListener("click", submitScore);
 }
 
 function showAccountOptions() {
@@ -183,6 +187,11 @@ inputEl.addEventListener("keydown", function (e) {
 currentWord = pickDailyWord();
 shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
 renderLetters();
+
+window.submitScore = submitScore;
+window.showCreateAccount = showCreateAccount;
+window.showLogin = showLogin;
+window.goHome = goHome;
 
 const timerInterval = setInterval(() => {
   timeLeft--;
