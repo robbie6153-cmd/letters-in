@@ -191,6 +191,7 @@ if (homeContent) {
   messageEl.textContent = "";
   inputEl.disabled = false;
   submitBtn.disabled = false;
+  loadGameLettersAndTimer();
 }
 
 submitBtn.addEventListener("click", submitWord);
@@ -201,10 +202,12 @@ inputEl.addEventListener("keydown", function (e) {
   }
 });
 
-setTimeout(() => {
+function loadGameLettersAndTimer() {
   currentWord = pickDailyWord();
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
+
+  clearInterval(timerInterval);
 
   timerInterval = setInterval(() => {
     timeLeft--;
@@ -215,4 +218,4 @@ setTimeout(() => {
       endGame();
     }
   }, 1000);
-}, 2000);
+}
