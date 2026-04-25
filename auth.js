@@ -63,7 +63,11 @@ window.signUp = async function () {
     });
 
     alert("Account created. You are now logged in.");
-    window.location.href = "index.html";
+  if (localStorage.getItem("pendingLettersInScore")) {
+  window.location.href = "index.html?submitPendingScore=true";
+} else {
+  window.location.href = "index.html";
+}
   } catch (error) {
     alert(error.message);
   }
@@ -82,7 +86,11 @@ window.logIn = async function () {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     alert("Logged in.");
-    window.location.href = "index.html";
+  if (localStorage.getItem("pendingLettersInScore")) {
+  window.location.href = "index.html?submitPendingScore=true";
+} else {
+  window.location.href = "index.html";
+}
   } catch (error) {
     alert(error.message);
   }

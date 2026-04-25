@@ -141,43 +141,20 @@ function submitWord() {
 }
 
 function submitScore() {
-  const loggedInUser =
-    window.robTechCurrentUser ||
-    window.currentUser ||
-    null;
-
-  if (!loggedInUser) {
-    showAccountOptions();
-    return;
-  }
+if (!window.auth?.currentUser) {
+  localStorage.setItem("pendingLettersInScore", score);
+  showAccountOptions();
+  return;
+}
 
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
+    updateLettersInStats(score);
   } else {
     alert("Score system not ready. Please try again.");
   }
 }
 
-function endGame() {
-  clearInterval(timerInterval);
-
-  inputEl.disabled = true;
-  submitBtn.disabled = true;
-  messageEl.textContent = "";
-
-  finalScoreEl.innerHTML = `
-  <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
-
-  <div class="end-buttons">
-    <button id="finalSubmitScoreBtn" class="submit-score-btn">Submit Score</button>
-    <button onclick="goToLeaderboard()" class="leaderboard-btn">View Leaderboard</button>
-  </div>
-`;
-
-  document
-    .getElementById("finalSubmitScoreBtn")
-    .addEventListener("click", submitScore);
-}
 
 function goToLeaderboard() {
   window.location.href = "leaderboard.html";
@@ -254,6 +231,69 @@ function startGame() {
   }, 1000);
 }
 
+async function updateLettersInStats(finalScore) {
+  const user = window.auth?.currentUser;
+  const db = window.db;
+
+  if (!user || !db) {
+    console.log("Stats not saved: user or database not ready.");
+    return;
+  }
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const yesterdayDate = new Date();
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterday = yesterdayDate.toISOString().split("T")[0];
+
+  const statsRef = window.doc(db, "users", user.uid, "stats", "lettersIn");
+  const statsSnap = await window.getDoc(statsRef);
+
+  let stats = {
+    timesPlayed: 0,
+    highestScore: 0,
+    totalScore: 0,
+    averageScore: 0,
+    longestStreak: 0,
+    currentStreak: 0,
+    lastPlayedDate: null
+  };
+
+  if (statsSnap.exists()) {
+    stats = {
+      ...stats,
+      ...statsSnap.data()
+    };
+  }
+
+  let currentStreak = stats.currentStreak || 0;
+
+  if (stats.lastPlayedDate === today) {
+    currentStreak = stats.currentStreak || 1;
+  } else if (stats.lastPlayedDate === yesterday) {
+    currentStreak += 1;
+  } else {
+    currentStreak = 1;
+  }
+
+  const timesPlayed = (stats.timesPlayed || 0) + 1;
+  const totalScore = (stats.totalScore || 0) + Number(finalScore || 0);
+  const highestScore = Math.max(stats.highestScore || 0, Number(finalScore || 0));
+  const averageScore = Math.round(totalScore / timesPlayed);
+  const longestStreak = Math.max(stats.longestStreak || 0, currentStreak);
+
+  await window.setDoc(statsRef, {
+    timesPlayed,
+    highestScore,
+    totalScore,
+    averageScore,
+    longestStreak,
+    currentStreak,
+    lastPlayedDate: today
+  }, { merge: true });
+
+  console.log("Stats saved");
+}
 submitBtn.addEventListener("click", submitWord);
 
 inputEl.addEventListener("keydown", function (e) {
@@ -268,3 +308,26 @@ window.showLogin = showLogin;
 window.goHome = goHome;
 window.startGame = startGame;
 window.goToLeaderboard = goToLeaderboard;
+window.addEventListener("load", () => {
+  const params = new URLSearchParams(window.location.search);
+  const shouldSubmitPendingScore = params.get("submitPendingScore");
+
+  if (shouldSubmitPendingScore === "true") {
+    const pendingScore = localStorage.getItem("pendingLettersInScore");
+
+    if (pendingScore !== null) {
+      const scoreNumber = Number(pendingScore);
+setTimeout(() => {
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(scoreNumber);
+    updateLettersInStats(scoreNumber);
+
+    localStorage.removeItem("pendingLettersInScore"); // ✅ MOVE HERE
+
+  } else {
+    alert("Score system not ready. Please try again.");
+  }
+}, 1000);
+    }
+  }
+});

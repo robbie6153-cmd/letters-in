@@ -96,6 +96,12 @@
   function goHome() {
     window.location.href = "index.html";
   }
+
+  function returnToGame() {
+    window.location.href = "index.html?submitPendingScore=true";
+  }
+
+  window.returnToGame = returnToGame;
 </script>
 
 <script type="module" src="firebase-config.js"></script>
