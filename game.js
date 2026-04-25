@@ -146,7 +146,7 @@ function submitWord() {
   inputEl.value = "";
 }
 
-function submitScore() {
+async function submitScore() {
   const loggedInUser =
     window.robTechCurrentUser ||
     window.currentUser ||
@@ -159,9 +159,10 @@ function submitScore() {
 
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
-  } else {
-    showAccountOptions();
+    return;
   }
+
+  showAccountOptions();
 }
 
   const todayId = getTodayId();
