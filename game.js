@@ -199,7 +199,7 @@ async function submitScore() {
       {
         uid: loggedInUser.uid,
         email: loggedInUser.email || "",
-        username: loggedInUser.displayName || loggedInUser.email || "Player",
+        username: window.robTechUsername || "Player",
         score: score,
         day: todayId,
         game: "letters-in",
