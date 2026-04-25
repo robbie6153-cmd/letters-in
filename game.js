@@ -1,5 +1,5 @@
 let score = 0;
-let timeLeft = 15;
+let timeLeft = 200;
 let usedWords = new Set();
 let currentWord = "";
 let shuffledLetters = [];
