@@ -1,10 +1,4 @@
-import {
-  doc,
-  setDoc,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
-import { auth, db } from "./firebase-config.js";
 let score = 0;
 let timeLeft = 200;
 let usedWords = new Set();
@@ -152,13 +146,23 @@ function submitWord() {
   inputEl.value = "";
 }
 
-async function submitScore() {
-  const loggedInUser = auth.currentUser;
+function submitScore() {
+  const loggedInUser =
+    window.robTechCurrentUser ||
+    window.currentUser ||
+    null;
 
   if (!loggedInUser) {
     showAccountOptions();
     return;
   }
+
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(score);
+  } else {
+    showAccountOptions();
+  }
+}
 
   const todayId = getTodayId();
 
