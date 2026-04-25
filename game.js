@@ -230,7 +230,22 @@ function startGame() {
     }
   }, 1000);
 }
+function endGame() {
+  clearInterval(timerInterval);
 
+  inputEl.disabled = true;
+  submitBtn.disabled = true;
+  messageEl.textContent = "";
+
+  finalScoreEl.innerHTML = `
+    <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
+
+    <div class="end-buttons">
+      <button onclick="submitScore()" id="finalSubmitScoreBtn" class="submit-score-btn">Submit Score</button>
+      <button onclick="goToLeaderboard()" class="leaderboard-btn">View Leaderboard</button>
+    </div>
+  `;
+}
 async function updateLettersInStats(finalScore) {
   const user = window.auth?.currentUser;
   const db = window.db;
