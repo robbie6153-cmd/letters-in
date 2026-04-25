@@ -1,5 +1,6 @@
 window.dictionary = [];
-window.dictionaryReady = fetch("https://cdn.jsdelivr.net/npm/an-array-of-english-words/index.json")
+
+fetch("https://cdn.jsdelivr.net/npm/an-array-of-english-words/index.json")
   .then(response => response.json())
   .then(words => {
     window.dictionary = words.map(word => word.trim().toUpperCase());

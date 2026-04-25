@@ -22,8 +22,10 @@ const messageEl = document.getElementById("message");
 const finalScoreEl = document.getElementById("finalScore");
 
 function getDictionaryArray() {
-  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) return dictionary;
-  if (typeof words !== "undefined" && Array.isArray(words)) return words;
+  if (window.dictionary && Array.isArray(window.dictionary) && window.dictionary.length > 0) {
+    return window.dictionary;
+  }
+
   return null;
 }
 
@@ -59,7 +61,7 @@ function pickDailyWord() {
   const dict = getDictionaryArray();
 
   if (!dict) {
-    messageEl.textContent = "Dictionary not loaded.";
+    messageEl.textContent = "Dictionary still loading. Using today's backup word.";
     return "CHOCOLATE";
   }
 
@@ -69,13 +71,14 @@ function pickDailyWord() {
     .filter(word => /^[A-Z]{9}$/.test(word));
 
   if (nineLetterWords.length === 0) {
-    messageEl.textContent = "No 9-letter words found.";
+    messageEl.textContent = "No 9-letter words found. Using backup word.";
     return "NOTEBOOKS";
   }
 
   const seed = getDailySeed();
-  const index = Math.floor(Math.sin(seed) * 10000) % nineLetterWords.length;
-  return nineLetterWords[Math.abs(index)];
+  const index = Math.abs(Math.floor(Math.sin(seed) * 10000)) % nineLetterWords.length;
+
+  return nineLetterWords[index];
 }
 
 function renderLetters() {
@@ -266,21 +269,14 @@ function goHome() {
   window.location.href = "index.html";
 }
 
-async function startGame() {
+function startGame() {
   if (gameStarted) return;
   gameStarted = true;
-
-  messageEl.textContent = "Loading dictionary...";
-
-  if (window.dictionaryReady) {
-    await window.dictionaryReady;
-  }
 
   currentWord = pickDailyWord();
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
 
-  messageEl.textContent = "";
   timeEl.textContent = timeLeft;
   scoreEl.textContent = score;
 
