@@ -186,7 +186,7 @@ async function submitScore() {
       { merge: true }
     );
 
-    messageEl.textContent = "Score submitted to today’s leaderboard.";
+  messageEl.textContent = "Score submitted to today's leaderboard.";
   } catch (error) {
     console.error("Score submit error:", error);
     messageEl.textContent = "Could not submit score. Please try again.";
