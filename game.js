@@ -1,4 +1,3 @@
-
 let score = 0;
 let timeLeft = 200;
 let usedWords = new Set();
@@ -16,10 +15,8 @@ const messageEl = document.getElementById("message");
 const finalScoreEl = document.getElementById("finalScore");
 
 function getDictionaryArray() {
-  if (window.dictionary && Array.isArray(window.dictionary) && window.dictionary.length > 0) {
-    return window.dictionary;
-  }
-
+  if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) return dictionary;
+  if (typeof words !== "undefined" && Array.isArray(words)) return words;
   return null;
 }
 
@@ -29,11 +26,7 @@ function getDailySeed() {
     `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`
   );
 }
-function getTodayId() {
-  const today = new Date();
 
-  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-}
 function shuffleArray(arr, seed) {
   const result = [...arr];
   let randomSeed = seed;
@@ -55,7 +48,7 @@ function pickDailyWord() {
   const dict = getDictionaryArray();
 
   if (!dict) {
-    messageEl.textContent = "Dictionary still loading. Using today's backup word.";
+    messageEl.textContent = "Dictionary not loaded.";
     return "CHOCOLATE";
   }
 
@@ -65,14 +58,13 @@ function pickDailyWord() {
     .filter(word => /^[A-Z]{9}$/.test(word));
 
   if (nineLetterWords.length === 0) {
-    messageEl.textContent = "No 9-letter words found. Using backup word.";
+    messageEl.textContent = "No 9-letter words found.";
     return "NOTEBOOKS";
   }
 
   const seed = getDailySeed();
-  const index = Math.abs(Math.floor(Math.sin(seed) * 10000)) % nineLetterWords.length;
-
-  return nineLetterWords[index];
+  const index = Math.floor(Math.sin(seed) * 10000) % nineLetterWords.length;
+  return nineLetterWords[Math.abs(index)];
 }
 
 function renderLetters() {
@@ -146,10 +138,11 @@ function submitWord() {
   inputEl.value = "";
 }
 
-async function submitScore() {
+function submitScore() {
   const loggedInUser =
     window.robTechCurrentUser ||
     window.currentUser ||
+    (window.auth && window.auth.currentUser) ||
     null;
 
   if (!loggedInUser) {
@@ -159,42 +152,8 @@ async function submitScore() {
 
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
-    return;
-  }
-
-  showAccountOptions();
-}
-
-  const todayId = getTodayId();
-
-  try {
-    await setDoc(
-      doc(
-        db,
-        "leaderboards",
-        "letters-in",
-        "days",
-        todayId,
-        "scores",
-        loggedInUser.uid
-      ),
-      {
-        uid: loggedInUser.uid,
-        email: loggedInUser.email || "",
-        username: window.robTechUsername || "Player",
-        score: score,
-        day: todayId,
-        game: "letters-in",
-        submittedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
-
-alert("Score submitted to today's leaderboard!");
-window.location.href = "leaderboard.html";
-  } catch (error) {
-    console.error("Score submit error:", error);
-    messageEl.textContent = "Could not submit score. Please try again.";
+  } else {
+    showAccountOptions();
   }
 }
 
@@ -205,7 +164,7 @@ function endGame() {
   submitBtn.disabled = true;
   messageEl.textContent = "";
 
-finalScoreEl.innerHTML = `
+  finalScoreEl.innerHTML = `
   <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
 
   <div class="end-buttons">
@@ -283,5 +242,3 @@ window.submitScore = submitScore;
 window.showCreateAccount = showCreateAccount;
 window.showLogin = showLogin;
 window.goHome = goHome;
-window.startGame = startGame;
-window.goToLeaderboard = goToLeaderboard;
