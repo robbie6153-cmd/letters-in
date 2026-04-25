@@ -141,11 +141,13 @@ function submitWord() {
 }
 
 function submitScore() {
-if (!window.auth?.currentUser) {
-  localStorage.setItem("pendingLettersInScore", score);
-  showAccountOptions();
-  return;
-}
+  const user = window.robTechCurrentUser || window.auth?.currentUser;
+
+  if (!user) {
+    localStorage.setItem("pendingLettersInScore", score);
+    showAccountOptions();
+    return;
+  }
 
   if (typeof window.submitRobTechScore === "function") {
     window.submitRobTechScore(score);
