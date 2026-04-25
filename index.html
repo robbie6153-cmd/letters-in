@@ -29,10 +29,11 @@
     document.getElementById("home-content").style.display = "none";
     document.getElementById("game").style.display = "block";
 
-    if (typeof startGame === "function") {
-      startGame();
-    }
-  }
+   if (typeof window.startGame === "function") {
+  window.startGame();
+} else {
+  console.log("startGame is not ready yet");
+}
 </script>
 </head>
 <body>
