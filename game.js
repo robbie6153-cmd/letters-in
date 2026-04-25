@@ -200,7 +200,7 @@ function endGame() {
   submitBtn.disabled = true;
   messageEl.textContent = "";
 
-  finalScoreEl.innerHTML = `
+finalScoreEl.innerHTML = `
   <p>Game's up. Your score was ${score}. Come back tomorrow for a new game.</p>
 
   <div class="end-buttons">
