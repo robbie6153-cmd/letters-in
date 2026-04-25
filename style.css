@@ -346,9 +346,6 @@ h1 {
   width: 80%;
   max-width: 300px;
 }
-function goToLeaderboard() {
-  window.location.href = "leaderboard.html";
-}
 
 .delete-account-box {
   margin-top: 30px;
@@ -367,4 +364,21 @@ function goToLeaderboard() {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+}
+.delete-account-btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+
+  background: #e53935;
+  color: white;
+}
+
+.delete-account-btn:hover {
+  background: #c62828;
 }

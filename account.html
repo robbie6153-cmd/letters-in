@@ -79,24 +79,23 @@
 <body>
 
   <div class="account-box">
-    <h1>RobTech Account</h1>
+  <h1>RobTech Account</h1>
 
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <input type="text" id="username" placeholder="Username (for sign up only)">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <input type="text" id="username" placeholder="Username (for sign up only)">
 
-    <button class="signup-btn" onclick="signUp()">Sign Up</button>
-    <button class="login-btn" onclick="logIn()">Log In</button>
+  <button class="signup-btn" onclick="signUp()">Sign Up</button>
+  <button class="login-btn" onclick="logIn()">Log In</button>
 
-    <span class="link" onclick="forgotPassword()">Forgot Password?</span>
+  <span class="link" onclick="forgotPassword()">Forgot Password?</span>
 
-    <button class="secondary-btn" onclick="goHome()">Home</button>
-  </div>
+  <button class="secondary-btn" onclick="goHome()">Home</button>
 
-  <div class="delete-account-box">
-  <h3>Delete account</h3>
-  <p>This will permanently delete your RobTechUK account.</p>
-  <button onclick="deleteRobTechAccount()" class="delete-account-btn">Delete account</button>
+  <!-- Delete Account (now same style/size area) -->
+  <button onclick="deleteRobTechAccount()" class="delete-account-btn">
+    Delete Account
+  </button>
 </div>
 
 <script>
