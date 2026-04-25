@@ -164,32 +164,6 @@ async function submitScore() {
 
   try {
     await setDoc(
-      doc(db, "leaderboards", "letters-in", "days", todayId, "scores", loggedInUser.uid),
-      {
-        uid: loggedInUser.uid,
-        email: loggedInUser.email || "",
-        username: window.robTechUsername || loggedInUser.email || "Player",
-        score: score,
-        day: todayId,
-        game: "letters-in",
-        submittedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
-
-    alert("Score submitted to today's leaderboard!");
-    window.location.href = "leaderboard.html";
-
-  } catch (error) {
-    console.error("Score submit error:", error);
-    alert("Could not submit score: " + error.message);
-  }
-}
-
-  const todayId = getTodayId();
-
-  try {
-    await setDoc(
       doc(
         db,
         "leaderboards",
@@ -211,7 +185,8 @@ async function submitScore() {
       { merge: true }
     );
 
-  messageEl.textContent = "Score submitted to today's leaderboard.";
+alert("Score submitted to today's leaderboard!");
+window.location.href = "leaderboard.html";
   } catch (error) {
     console.error("Score submit error:", error);
     messageEl.textContent = "Could not submit score. Please try again.";
