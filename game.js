@@ -139,22 +139,7 @@ function submitWord() {
 }
 
 function submitScore() {
-  const loggedInUser =
-    window.robTechCurrentUser ||
-    window.currentUser ||
-    (window.auth && window.auth.currentUser) ||
-    null;
-
-  if (!loggedInUser) {
-    showAccountOptions();
-    return;
-  }
-
-  if (typeof window.submitRobTechScore === "function") {
-    window.submitRobTechScore(score);
-  } else {
-    showAccountOptions();
-  }
+  window.location.href = "leaderboard.html";
 }
 
 function endGame() {
@@ -242,3 +227,5 @@ window.submitScore = submitScore;
 window.showCreateAccount = showCreateAccount;
 window.showLogin = showLogin;
 window.goHome = goHome;
+window.startGame = startGame;
+window.goToLeaderboard = goToLeaderboard;

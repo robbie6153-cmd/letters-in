@@ -79,25 +79,19 @@
 <body>
 
   <div class="account-box">
-  <h1>RobTech Account</h1>
+    <h1>RobTech Account</h1>
 
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
-  <input type="text" id="username" placeholder="Username (for sign up only)">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <input type="text" id="username" placeholder="Username (for sign up only)">
 
-  <button class="signup-btn" onclick="signUp()">Sign Up</button>
-  <button class="login-btn" onclick="logIn()">Log In</button>
+    <button class="signup-btn" onclick="signUp()">Sign Up</button>
+    <button class="login-btn" onclick="logIn()">Log In</button>
 
-  <span class="link" onclick="forgotPassword()">Forgot Password?</span>
+    <span class="link" onclick="forgotPassword()">Forgot Password?</span>
 
-  <button class="secondary-btn" onclick="goHome()">Home</button>
-
-  <!-- Delete Account (now same style/size area) -->
-  <button onclick="deleteRobTechAccount()" class="delete-account-btn">
-    Delete Account
-  </button>
-</div>
-
+    <button class="secondary-btn" onclick="goHome()">Home</button>
+  </div>
 <script>
   function goHome() {
     window.location.href = "index.html";

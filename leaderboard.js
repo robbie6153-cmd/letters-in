@@ -16,6 +16,11 @@ function getTodayId() {
 }
 
 async function loadLeaderboard() {
+  if (!leaderboardList) {
+    console.error("leaderboardList not found");
+    return;
+  }
+
   try {
     const todayId = getTodayId();
 
@@ -37,7 +42,7 @@ async function loadLeaderboard() {
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      leaderboardList.innerHTML = "<p>No scores submitted yet today.</p>";
+      leaderboardList.innerHTML = "<p>No scores submitted yet.</p>";
       return;
     }
 
@@ -45,7 +50,7 @@ async function loadLeaderboard() {
 
     snapshot.forEach((doc) => {
       const data = doc.data();
-      html += `<li>${data.username || "Player"}</li>`;
+      html += `<li><strong>${data.username || "Player"}</strong> — ${data.score}</li>`;
     });
 
     html += "</ol>";

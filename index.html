@@ -23,22 +23,18 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
     crossorigin="anonymous"></script>
 
-<script>
+ <script>
   function showGameScreen() {
     document.getElementById("home-screen").style.display = "none";
     document.getElementById("home-content").style.display = "none";
     document.getElementById("game").style.display = "block";
 
-    const waitForGame = setInterval(() => {
-      if (typeof window.startGame === "function") {
-        clearInterval(waitForGame);
-        window.startGame();
-      }
-    }, 100);
+    if (typeof startGame === "function") {
+      startGame();
+    }
   }
 </script>
 </head>
-<body>
 
 <!-- HOME IMAGE -->
 <div id="home-screen">
@@ -174,5 +170,6 @@
 <script src="https://www.highperformanceformat.com/3c9b303fbfe95bde4d6afc8bf8f39a8f/invoke.js"></script>
 <script type="module" src="firebase-config.js"></script>
 <script type="module" src="auth.js"></script>
+<script type="module" src="leaderboard.js"></script>
 </body>
 </html>
