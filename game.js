@@ -1,3 +1,10 @@
+import {
+  doc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
+import { auth, db } from "./firebase-config.js";
 let score = 0;
 let timeLeft = 200;
 let usedWords = new Set();
@@ -26,7 +33,11 @@ function getDailySeed() {
     `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, "0")}${String(today.getDate()).padStart(2, "0")}`
   );
 }
+function getTodayId() {
+  const today = new Date();
 
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+}
 function shuffleArray(arr, seed) {
   const result = [...arr];
   let randomSeed = seed;
@@ -138,11 +149,11 @@ function submitWord() {
   inputEl.value = "";
 }
 
-function submitScore() {
+async function submitScore() {
   const loggedInUser =
     window.robTechCurrentUser ||
     window.currentUser ||
-    (window.auth && window.auth.currentUser) ||
+    auth.currentUser ||
     null;
 
   if (!loggedInUser) {
@@ -150,10 +161,35 @@ function submitScore() {
     return;
   }
 
-  if (typeof window.submitRobTechScore === "function") {
-    window.submitRobTechScore(score);
-  } else {
-    showAccountOptions();
+  const todayId = getTodayId();
+
+  try {
+    await setDoc(
+      doc(
+        db,
+        "leaderboards",
+        "letters-in",
+        "days",
+        todayId,
+        "scores",
+        loggedInUser.uid
+      ),
+      {
+        uid: loggedInUser.uid,
+        email: loggedInUser.email || "",
+        username: loggedInUser.displayName || loggedInUser.email || "Player",
+        score: score,
+        day: todayId,
+        game: "letters-in",
+        submittedAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    messageEl.textContent = "Score submitted to today’s leaderboard.";
+  } catch (error) {
+    console.error("Score submit error:", error);
+    messageEl.textContent = "Could not submit score. Please try again.";
   }
 }
 
