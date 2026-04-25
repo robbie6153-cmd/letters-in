@@ -266,14 +266,21 @@ function goHome() {
   window.location.href = "index.html";
 }
 
-function startGame() {
+async function startGame() {
   if (gameStarted) return;
   gameStarted = true;
+
+  messageEl.textContent = "Loading dictionary...";
+
+  if (window.dictionaryReady) {
+    await window.dictionaryReady;
+  }
 
   currentWord = pickDailyWord();
   shuffledLetters = shuffleArray(currentWord.split(""), getDailySeed());
   renderLetters();
 
+  messageEl.textContent = "";
   timeEl.textContent = timeLeft;
   scoreEl.textContent = score;
 
