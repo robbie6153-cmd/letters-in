@@ -3,6 +3,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/fireba
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
+import {
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
 // Your config
 const firebaseConfig = {
   apiKey: "AIzaSyDjRUGGgHuIvqZn8F1Z83zry_kDg8Vf3SE",
@@ -20,3 +26,10 @@ const app = initializeApp(firebaseConfig);
 // Services
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+// 👇 MAKE AVAILABLE TO game.js (VERY IMPORTANT)
+window.auth = auth;
+window.db = db;
+window.doc = doc;
+window.getDoc = getDoc;
+window.setDoc = setDoc;
