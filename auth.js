@@ -5,20 +5,26 @@ import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 import {
   doc,
   setDoc,
   getDoc,
-  addDoc,
-  collection,
+  deleteDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 let currentUser = null;
 let currentUsername = null;
+
+function getTodayId() {
+  const today = new Date();
+
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+}
 
 onAuthStateChanged(auth, async (user) => {
   currentUser = user;
@@ -107,6 +113,37 @@ window.logOut = async function () {
   alert("Logged out.");
 };
 
+window.deleteRobTechAccount = async function () {
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("You need to be logged in to delete your account.");
+    return;
+  }
+
+  const confirmed = confirm(
+    "Are you sure you want to delete your RobTechUK account?"
+  );
+
+  if (!confirmed) return;
+
+  try {
+    await deleteDoc(doc(db, "users", user.uid));
+    await deleteUser(user);
+
+    alert("Your RobTechUK account has been deleted.");
+    window.location.href = "index.html";
+  } catch (error) {
+    console.error("Delete account error:", error);
+
+    if (error.code === "auth/requires-recent-login") {
+      alert("For security, please log out, log back in, then delete your account.");
+    } else {
+      alert(error.message);
+    }
+  }
+};
+
 window.submitRobTechScore = async function (score) {
   if (!auth.currentUser) {
     alert("You need to create an account or log in to submit your score.");
@@ -115,17 +152,19 @@ window.submitRobTechScore = async function (score) {
 
   const uid = auth.currentUser.uid;
   const username = window.robTechUsername || auth.currentUser.email;
+  const todayId = getTodayId();
 
   try {
-    await addDoc(collection(db, "leaderboards", "letters-in", "scores"), {
+    await setDoc(doc(db, "leaderboards", "letters-in", "days", todayId, "scores", uid), {
       uid: uid,
       username: username,
       score: score,
       game: "letters-in",
+      day: todayId,
       createdAt: serverTimestamp()
     });
 
-    alert("Score submitted to leaderboard!");
+    alert("Score submitted to today's leaderboard!");
     window.location.href = "leaderboard.html";
   } catch (error) {
     alert(error.message);

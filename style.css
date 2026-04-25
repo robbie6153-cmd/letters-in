@@ -349,3 +349,22 @@ h1 {
 function goToLeaderboard() {
   window.location.href = "leaderboard.html";
 }
+
+.delete-account-box {
+  margin-top: 30px;
+  padding: 15px;
+  border: 2px solid #b00020;
+  border-radius: 10px;
+  background: #fff0f0;
+  text-align: center;
+}
+
+.delete-account-btn {
+  background: #b00020;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
