@@ -278,3 +278,5 @@ window.submitScore = submitScore;
 window.showCreateAccount = showCreateAccount;
 window.showLogin = showLogin;
 window.goHome = goHome;
+window.startGame = startGame;
+window.goToLeaderboard = goToLeaderboard;
