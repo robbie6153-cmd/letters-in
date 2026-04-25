@@ -1,14 +1,15 @@
 import { auth, db } from "./firebase-config.js";
 
 import {
-  onAuthStateChanged
+  onAuthStateChanged,
+  deleteUser
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-auth.js";
 
 import {
   doc,
-  getDoc
+  getDoc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-
 // Elements
 const usernameEl = document.getElementById("profileUsername");
 const emailEl = document.getElementById("profileEmail");
@@ -59,3 +60,48 @@ onAuthStateChanged(auth, async (user) => {
     console.error("Error loading profile:", error);
   }
 });
+
+window.confirmDeleteAccount = async function () {
+  const confirmDelete = confirm("Are you sure you want to delete your RobTechUK account?");
+
+  if (!confirmDelete) return;
+
+  const user = auth.currentUser;
+
+  if (!user) {
+    alert("No user found.");
+    return;
+  }
+
+  try {
+    const uid = user.uid;
+
+// 🔥 Delete Firebase Auth account first
+await deleteUser(user);
+
+// 🔥 Then delete Firestore data
+await deleteDoc(doc(db, "users", uid, "stats", "lettersIn"));
+await deleteDoc(doc(db, "users", uid));
+
+    alert("Your account has been deleted.");
+
+    // Redirect to home
+    window.location.href = "index.html";
+
+  } catch (error) {
+    console.error("Delete error:", error);
+
+    if (error.code === "auth/requires-recent-login") {
+      alert("Please log out and log back in before deleting your account.");
+    } else {
+      alert("Error deleting account. Please try again.");
+    }
+  }
+};
+const deleteAccountBtn = document.getElementById("deleteAccountBtn");
+
+if (deleteAccountBtn) {
+  deleteAccountBtn.addEventListener("click", () => {
+    window.confirmDeleteAccount();
+  });
+}
