@@ -13,6 +13,8 @@ const inputEl = document.getElementById("wordInput");
 const submitBtn = document.getElementById("submitBtn");
 const messageEl = document.getElementById("message");
 const finalScoreEl = document.getElementById("finalScore");
+const loggedInBox = document.getElementById("loggedInBox");
+const gameLoggedInBox = document.getElementById("gameLoggedInBox");
 
 function getDictionaryArray() {
   if (typeof dictionary !== "undefined" && Array.isArray(dictionary)) return dictionary;
@@ -207,6 +209,29 @@ function goHome() {
   window.location.href = "index.html";
 }
 
+function updateLoginDisplay() {
+  const username = window.robTechUsername;
+
+  if (username) {
+    if (loggedInBox) {
+      loggedInBox.innerHTML = `Logged in as<br><strong>${username}</strong>`;
+    }
+
+    if (gameLoggedInBox) {
+      gameLoggedInBox.innerHTML = `Logged in as <strong>${username}</strong>`;
+    }
+  } else {
+    if (loggedInBox) {
+      loggedInBox.innerHTML = "";
+    }
+
+    if (gameLoggedInBox) {
+      gameLoggedInBox.innerHTML = "";
+    }
+  }
+}
+
+setInterval(updateLoginDisplay, 500);
 function startGame() {
   if (gameStarted) return;
   gameStarted = true;
