@@ -12,14 +12,13 @@ import {
   doc,
   setDoc,
   getDoc,
-  addDoc,
-  collection,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
 
 let currentUser = null;
 let currentUsername = null;
 
+// 🔐 Auth state listener
 onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   window.robTechCurrentUser = user;
@@ -41,6 +40,7 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
+// 🆕 Sign up
 window.signUp = async function () {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -68,6 +68,7 @@ window.signUp = async function () {
   }
 };
 
+// 🔐 Log in
 window.logIn = async function () {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -86,6 +87,7 @@ window.logIn = async function () {
   }
 };
 
+// 🔁 Reset password
 window.forgotPassword = async function () {
   const email = document.getElementById("email").value.trim();
 
@@ -102,16 +104,19 @@ window.forgotPassword = async function () {
   }
 };
 
+// 🚪 Log out
 window.logOut = async function () {
   await signOut(auth);
   alert("Logged out.");
 };
 
+// 📅 Daily ID
 function getTodayId() {
   const today = new Date();
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 }
 
+// 🏆 Submit score (daily leaderboard)
 window.submitRobTechScore = async function (score) {
   if (!auth.currentUser) {
     alert("You need to create an account or log in to submit your score.");
@@ -119,10 +124,18 @@ window.submitRobTechScore = async function (score) {
   }
 
   const uid = auth.currentUser.uid;
-  const username = window.robTechUsername || auth.currentUser.email;
   const todayId = getTodayId();
 
   try {
+    // 🔍 Always fetch latest username from Firestore
+    const userSnap = await getDoc(doc(db, "users", uid));
+
+    let username = "Player";
+
+    if (userSnap.exists()) {
+      username = userSnap.data().username || "Player";
+    }
+
     await setDoc(
       doc(
         db,
