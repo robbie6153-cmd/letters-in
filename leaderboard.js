@@ -10,9 +10,23 @@ import {
 
 const leaderboardList = document.getElementById("leaderboardList");
 
+function getTodayId() {
+  const today = new Date();
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+}
+
 async function loadLeaderboard() {
   try {
-    const scoresRef = collection(db, "leaderboards", "letters-in", "scores");
+    const todayId = getTodayId();
+
+    const scoresRef = collection(
+      db,
+      "leaderboards",
+      "letters-in",
+      "days",
+      todayId,
+      "scores"
+    );
 
     const q = query(
       scoresRef,
@@ -23,7 +37,7 @@ async function loadLeaderboard() {
     const snapshot = await getDocs(q);
 
     if (snapshot.empty) {
-      leaderboardList.innerHTML = "<p>No scores submitted yet.</p>";
+      leaderboardList.innerHTML = "<p>No scores submitted yet today.</p>";
       return;
     }
 
@@ -31,7 +45,7 @@ async function loadLeaderboard() {
 
     snapshot.forEach((doc) => {
       const data = doc.data();
-      html += `<li><strong>${data.username || "Player"}</strong> — ${data.score}</li>`;
+      html += `<li>${data.username || "Player"}</li>`;
     });
 
     html += "</ol>";

@@ -150,16 +150,38 @@ function submitWord() {
 }
 
 async function submitScore() {
-  const loggedInUser =
-    window.robTechCurrentUser ||
-    window.currentUser ||
-    auth.currentUser ||
-    null;
+  const loggedInUser = auth.currentUser;
 
   if (!loggedInUser) {
     showAccountOptions();
     return;
   }
+
+  const todayId = getTodayId();
+
+  try {
+    await setDoc(
+      doc(db, "leaderboards", "letters-in", "days", todayId, "scores", loggedInUser.uid),
+      {
+        uid: loggedInUser.uid,
+        email: loggedInUser.email || "",
+        username: window.robTechUsername || loggedInUser.email || "Player",
+        score: score,
+        day: todayId,
+        game: "letters-in",
+        submittedAt: serverTimestamp()
+      },
+      { merge: true }
+    );
+
+    alert("Score submitted to today's leaderboard!");
+    window.location.href = "leaderboard.html";
+
+  } catch (error) {
+    console.error("Score submit error:", error);
+    alert("Could not submit score: " + error.message);
+  }
+}
 
   const todayId = getTodayId();
 
