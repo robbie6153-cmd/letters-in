@@ -23,18 +23,20 @@
     src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
     crossorigin="anonymous"></script>
 
- <script>
-  function showGameScreen() {
-    document.getElementById("home-screen").style.display = "none";
-    document.getElementById("home-content").style.display = "none";
-    document.getElementById("game").style.display = "block";
+  <script>
+    function showGameScreen() {
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("home-content").style.display = "none";
+      document.getElementById("game").style.display = "block";
 
-    if (typeof startGame === "function") {
-      startGame();
+      if (typeof startGame === "function") {
+        startGame();
+      }
     }
-  }
-</script>
+  </script>
 </head>
+
+<body>
 
 <!-- HOME IMAGE -->
 <div id="home-screen">
@@ -49,13 +51,14 @@
     <a href="settings.html" class="hotspot settings-link"></a>
     <a href="profile.html" class="hotspot profile-link"></a>
 
-    <!-- PLAY NOW (DIRECT START) -->
-   <div class="play-button" onclick="showGameScreen()"></div>
-<a href="account.html" class="account-link">Log in / Create Account</a>
+    <div class="play-button" onclick="showGameScreen()"></div>
+
+    <a href="account.html" class="account-link">Log in / Create Account</a>
     <a href="contact.html" class="hotspot contact-link"></a>
   </div>
 </div>
 
+<!-- Ad banner -->
 <script>
   atOptions = {
     'key' : '3c9b303fbfe95bde4d6afc8bf8f39a8f',
@@ -66,7 +69,6 @@
   };
 </script>
 <script src="https://www.highperformanceformat.com/3c9b303fbfe95bde4d6afc8bf8f39a8f/invoke.js"></script>
-
 
 <!-- HOME CONTENT -->
 <div id="home-content">
@@ -94,7 +96,6 @@
     </p>
   </section>
 
-  <!-- 🔥 NEW: MORE GAMES (NOW IN RIGHT PLACE) -->
   <section class="info-section">
     <h2>More Games from RobTechUK</h2>
 
@@ -102,35 +103,31 @@
 
     <p>
       <strong>Word Shuffle:</strong><br>
-      Slide the tiles and discover words in this original brain training game. Add chains and combos for bonus points.<br>
       <a href="https://wordshuffle.co.uk" target="_blank">Play Word Shuffle</a>
     </p>
 
     <p>
       <strong>Word Steps:</strong><br>
-      Change one letter at a time to form new words before the timer runs out. As the words get longer, the points increase.<br>
       <a href="https://wordsteps.co.uk" target="_blank">Play Word Steps</a>
     </p>
 
     <p>
       <strong>Word Scramble:</strong><br>
-      Solve the anagrams before the timer runs out. The anagrams reach 10 letters, with longer timers and higher points.<br>
       <a href="https://wordscramble.co.uk" target="_blank">Play Word Scramble</a>
     </p>
 
     <p>
       <strong>Letters Drop:</strong><br>
-      Based on the classic Tetris, letters fall from the top. Arrange them to create words and trigger cascades for multipliers.<br>
       <a href="https://lettersdrop.co.uk" target="_blank">Play Letters Drop</a>
     </p>
 
     <p>
-      For further information, visit:<br>
       <a href="https://robtech.uk" target="_blank"><strong>RobTech.uk</strong></a>
     </p>
+
     <p class="brain-quote">
-  Research suggests that just 10–15 minutes a day of word and brain training games can help improve memory, attention, and mental speed. Regular play has been shown to enhance cognitive performance and keep the brain active over time.
-</p>
+      Research suggests that just 10–15 minutes a day of word and brain training games can help improve memory, attention, and mental speed.
+    </p>
   </section>
 
 </div>
@@ -146,10 +143,10 @@
     <div>Score: <span id="score">0</span></div>
   </div>
 
-<div class="input-row">
-  <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
-  <button id="submitBtn">Submit Word</button>
-</div>
+  <div class="input-row">
+    <input type="text" id="wordInput" placeholder="Type a word..." autocomplete="off">
+    <button id="submitBtn">Submit Word</button>
+  </div>
 
   <div id="message"></div>
   <div id="finalScore"></div>
@@ -158,18 +155,8 @@
 <script src="dictionary.js"></script>
 <script src="game.js?v=12345"></script>
 
-<script>
-  atOptions = {
-    'key' : '3c9b303fbfe95bde4d6afc8bf8f39a8f',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/3c9b303fbfe95bde4d6afc8bf8f39a8f/invoke.js"></script>
-<script type="module" src="firebase-config.js"></script>
+<!-- Auth only -->
 <script type="module" src="auth.js"></script>
-<script type="module" src="leaderboard.js"></script>
+
 </body>
 </html>
