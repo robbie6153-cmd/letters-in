@@ -12,9 +12,10 @@ import {
   doc,
   setDoc,
   getDoc,
+  addDoc,
+  collection,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-
 let currentUser = null;
 let currentUsername = null;
 
@@ -136,26 +137,24 @@ window.submitRobTechScore = async function (score) {
       username = userSnap.data().username || "Player";
     }
 
-    await setDoc(
-      doc(
-        db,
-        "leaderboards",
-        "letters-in",
-        "days",
-        todayId,
-        "scores",
-        uid
-      ),
-      {
-        uid: uid,
-        username: username,
-        score: score,
-        game: "letters-in",
-        day: todayId,
-        submittedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+ await addDoc(
+  collection(
+    db,
+    "leaderboards",
+    "letters-in",
+    "days",
+    todayId,
+    "scores"
+  ),
+  {
+    uid: uid,
+    username: username,
+    score: score,
+    game: "letters-in",
+    day: todayId,
+    submittedAt: serverTimestamp()
+  }
+);
 
     alert("Score submitted to today's leaderboard!");
     window.location.href = "leaderboard.html";
