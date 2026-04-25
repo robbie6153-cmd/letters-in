@@ -1,5 +1,5 @@
 let score = 0;
-let timeLeft = 200;
+let timeLeft = 15;
 let usedWords = new Set();
 let currentWord = "";
 let shuffledLetters = [];
@@ -139,7 +139,21 @@ function submitWord() {
 }
 
 function submitScore() {
-  window.location.href = "leaderboard.html";
+  const loggedInUser =
+    window.robTechCurrentUser ||
+    window.currentUser ||
+    null;
+
+  if (!loggedInUser) {
+    showAccountOptions();
+    return;
+  }
+
+  if (typeof window.submitRobTechScore === "function") {
+    window.submitRobTechScore(score);
+  } else {
+    alert("Score system not ready. Please try again.");
+  }
 }
 
 function endGame() {
