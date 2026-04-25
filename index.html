@@ -29,11 +29,12 @@
     document.getElementById("home-content").style.display = "none";
     document.getElementById("game").style.display = "block";
 
-    if (typeof window.startGame === "function") {
-      window.startGame();
-    } else {
-      console.log("startGame is not ready yet");
-    }
+    const waitForGame = setInterval(() => {
+      if (typeof window.startGame === "function") {
+        clearInterval(waitForGame);
+        window.startGame();
+      }
+    }, 100);
   }
 </script>
 </head>
