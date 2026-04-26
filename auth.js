@@ -24,6 +24,10 @@ onAuthStateChanged(auth, async (user) => {
   currentUser = user;
   window.robTechCurrentUser = user;
 
+  const loginBtn = document.getElementById("loginBtn");
+  const loggedInBox = document.getElementById("loggedInBox");
+  const gameLoggedInBox = document.getElementById("gameLoggedInBox");
+
   if (user) {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
@@ -35,9 +39,38 @@ onAuthStateChanged(auth, async (user) => {
     }
 
     window.robTechUsername = currentUsername;
+
+    // Show signed-in text
+    if (loggedInBox) {
+      loggedInBox.textContent = `Signed in as ${currentUsername}`;
+    }
+
+    if (gameLoggedInBox) {
+      gameLoggedInBox.textContent = `Signed in as ${currentUsername}`;
+    }
+
+    // Hide login/create account link
+    if (loginBtn) {
+      loginBtn.style.display = "none";
+    }
+
   } else {
     currentUsername = null;
     window.robTechUsername = null;
+
+    // Clear signed-in text
+    if (loggedInBox) {
+      loggedInBox.textContent = "";
+    }
+
+    if (gameLoggedInBox) {
+      gameLoggedInBox.textContent = "";
+    }
+
+    // Show login/create account link
+    if (loginBtn) {
+      loginBtn.style.display = "block";
+    }
   }
 });
 
