@@ -462,3 +462,16 @@ h1 {
     padding: 18px;
   }
 }
+.account-subtext {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: -10px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.signin-link {
+  color: #4da6ff;
+  cursor: pointer;
+  text-decoration: underline;
+}
