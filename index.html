@@ -18,11 +18,6 @@
 
   <link rel="stylesheet" href="style.css">
 
-  <!-- AdSense -->
-  <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7137119315620021"
-    crossorigin="anonymous"></script>
-
   <script>
     function showGameScreen() {
       document.getElementById("home-screen").style.display = "none";
@@ -53,11 +48,12 @@
 
     <div class="play-button" onclick="showGameScreen()"></div>
 
-   <a href="account.html" id="loginBtn" class="account-link">Log in / Create Account</a>
+    <a href="account.html" id="loginBtn" class="account-link">Log in / Create Account</a>
     <a href="contact.html" class="hotspot contact-link"></a>
     <div id="loggedInBox" class="logged-in-box"></div>
   </div>
 </div>
+
 <!-- HOME CONTENT -->
 <div id="home-content">
 
@@ -91,21 +87,25 @@
 
     <p>
       <strong>Word Shuffle:</strong><br>
+      Arrange the letters in the grid to find words. Score for combos and chain bonus.<br>
       <a href="https://wordshuffle.co.uk" target="_blank">Play Word Shuffle</a>
     </p>
 
     <p>
       <strong>Word Steps:</strong><br>
+      Change one letter at a time to make as many words as you can in one minute, as the words get longer, but the points get bigger.<br>
       <a href="https://wordsteps.co.uk" target="_blank">Play Word Steps</a>
     </p>
 
     <p>
       <strong>Word Scramble:</strong><br>
+      Solve the ever increasingly longer anagrams before the timer runs out.<br>
       <a href="https://wordscramble.co.uk" target="_blank">Play Word Scramble</a>
     </p>
 
     <p>
       <strong>Letters Drop:</strong><br>
+      In this Tetris inspired word game, arrange the letter tiles as they fall to create words. More points for longer words.<br>
       <a href="https://lettersdrop.co.uk" target="_blank">Play Letters Drop</a>
     </p>
 
@@ -126,7 +126,6 @@
   <div id="gameLoggedInBox" class="game-logged-in-box"></div>
 
   <div id="letters"></div>
-
 
   <div id="infoBar">
     <div>Time: <span id="time">200</span></div>
