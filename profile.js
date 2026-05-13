@@ -10,6 +10,7 @@ import {
   getDoc,
   deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+
 // Elements
 const usernameEl = document.getElementById("profileUsername");
 const emailEl = document.getElementById("profileEmail");
@@ -27,11 +28,9 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  // Basic info
   emailEl.textContent = user.email || "No email found";
 
   try {
-    // Get user profile (username)
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
@@ -42,8 +41,7 @@ onAuthStateChanged(auth, async (user) => {
       usernameEl.textContent = user.email.split("@")[0];
     }
 
-    // Get stats
-    const statsRef = doc(db, "users", user.uid, "stats", "lettersIn");
+    const statsRef = doc(db, "users", user.uid, "stats", "LettersIn");
     const statsSnap = await getDoc(statsRef);
 
     if (statsSnap.exists()) {
@@ -76,16 +74,12 @@ window.confirmDeleteAccount = async function () {
   try {
     const uid = user.uid;
 
-// 🔥 Delete Firebase Auth account first
-await deleteUser(user);
+    await deleteUser(user);
 
-// 🔥 Then delete Firestore data
-await deleteDoc(doc(db, "users", uid, "stats", "lettersIn"));
-await deleteDoc(doc(db, "users", uid));
+    await deleteDoc(doc(db, "users", uid, "stats", "LettersIn"));
+    await deleteDoc(doc(db, "users", uid));
 
     alert("Your account has been deleted.");
-
-    // Redirect to home
     window.location.href = "index.html";
 
   } catch (error) {
@@ -98,6 +92,7 @@ await deleteDoc(doc(db, "users", uid));
     }
   }
 };
+
 const deleteAccountBtn = document.getElementById("deleteAccountBtn");
 
 if (deleteAccountBtn) {
