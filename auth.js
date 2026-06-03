@@ -178,14 +178,15 @@ window.submitRobTechScore = async function (score) {
       username = userSnap.data().username || "Player";
     }
 
- await addDoc(
-  collection(
+await setDoc(
+  doc(
     db,
     "leaderboards",
     "letters-in",
     "days",
     todayId,
-    "scores"
+    "scores",
+    uid
   ),
   {
     uid: uid,
